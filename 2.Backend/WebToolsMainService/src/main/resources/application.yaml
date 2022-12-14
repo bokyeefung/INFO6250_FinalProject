@@ -1,0 +1,19 @@
+server:
+  port: 30000
+  servlet:
+    session:
+      timeout: 120
+      cookie:
+        path: /
+spring:
+  datasource:
+    username: USER_NAME
+    password: PASSWD
+    url: jdbc:mysql://IP:PORT/DATABASE_NAME?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/mariadb/*Mapper.xml
+  type-aliases-package: com.bokyeefung.webtools.webtoolsmainservice.dao.mapper
