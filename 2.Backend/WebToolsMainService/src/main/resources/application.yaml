@@ -10,7 +10,7 @@ spring:
     username: USER_NAME
     password: PASSWD
     url: jdbc:mysql://IP:PORT/DATABASE_NAME?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
   configuration:
