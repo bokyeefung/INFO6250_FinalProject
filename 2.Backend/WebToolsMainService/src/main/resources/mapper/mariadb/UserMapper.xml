@@ -16,6 +16,9 @@
     <sql id="Base_Column_List">
         UUID, GROUP_ID, `NAME`, PASSWD, CHANGE_PASSWD_TIME, EMAIL, PHONE, ADDRESS, ENTITY, `ROLE`
     </sql>
+    <sql id="Security_Column_List">
+        UUID, GROUP_ID, `NAME`, CHANGE_PASSWD_TIME, EMAIL, PHONE, ADDRESS, ENTITY, `ROLE`
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -28,6 +31,13 @@
         select <include refid="Base_Column_List"/>
         from tbl_user
         where entity = #{entity,jdbcType=VARCHAR} and role &lt;&gt; 1
+    </select>
+
+    <!-- 登录 -->
+    <select id="selectForLogin" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.UserPo" resultMap="BaseResultMap">
+        select <include refid="Security_Column_List"/>
+        from tbl_user
+        where entity = #{entity,jdbcType=VARCHAR} and `NAME` = #{name,jdbcType=VARCHAR} and PASSWD = #{passwd,jdbcType=VARCHAR}
     </select>
 
     <!-- 删除用户 -->

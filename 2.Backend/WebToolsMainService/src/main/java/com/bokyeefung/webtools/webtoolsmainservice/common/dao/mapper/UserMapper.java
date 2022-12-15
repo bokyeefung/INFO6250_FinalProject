@@ -14,4 +14,6 @@ public interface UserMapper extends AbstractMapper<UserPo> {
     List<UserPo> selectByEntity(String entity);
 
     int deleteByUuidAndEntity(@Param("uuid") String uuid, @Param("entity") String entity);
+
+    UserPo selectForLogin(UserPo userPo);
 }
