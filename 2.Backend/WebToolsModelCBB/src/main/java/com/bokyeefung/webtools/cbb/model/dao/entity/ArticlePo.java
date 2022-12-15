@@ -1,4 +1,8 @@
-package com.bokyeefung.webtools.webtoolsmainservice.dao.mapper;
+/*
+ * Copyright (c) bokyeefung. 2022-2022. All rights reserved.
+ */
+
+package com.bokyeefung.webtools.cbb.model.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
