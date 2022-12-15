@@ -2,12 +2,12 @@
  * Copyright (c) bokyeefung. 2022-2022. All rights reserved.
  */
 
-package com.bokyeefung.webtools.webtoolsmainservice.supplier.controller;
+package com.bokyeefung.webtools.webtoolsmainservice.distributor.controller;
 
 import com.bokyeefung.webtools.cbb.model.constants.UserRole;
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
-import com.bokyeefung.webtools.webtoolsmainservice.supplier.service.impl.AdminService;
+import com.bokyeefung.webtools.webtoolsmainservice.distributor.service.impl.AdminService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Slf4j
-@RestController("supplierAdminController")
-@RequestMapping("/supplier/admin")
+@RestController("distributorAdminController")
+@RequestMapping("/distributor/admin")
 public class AdminController {
     @Autowired
-    @Qualifier("supplierAdminServiceImpl")
+    @Qualifier("distributorAdminServiceImpl")
     private AdminService adminService;
 
     @PostMapping("/user")

@@ -2,12 +2,12 @@
  * Copyright (c) bokyeefung. 2022-2022. All rights reserved.
  */
 
-package com.bokyeefung.webtools.webtoolsmainservice.supplier.controller;
+package com.bokyeefung.webtools.webtoolsmainservice.customer.controller;
 
 import com.bokyeefung.webtools.cbb.model.constants.UserRole;
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
-import com.bokyeefung.webtools.webtoolsmainservice.supplier.service.impl.AdminService;
+import com.bokyeefung.webtools.webtoolsmainservice.customer.service.impl.AdminService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Slf4j
-@RestController("supplierAdminController")
-@RequestMapping("/supplier/admin")
+@RestController("customerAdminController")
+@RequestMapping("/customer/admin")
 public class AdminController {
     @Autowired
-    @Qualifier("supplierAdminServiceImpl")
+    @Qualifier("customerAdminServiceImpl")
     private AdminService adminService;
 
     @PostMapping("/user")
@@ -53,11 +53,6 @@ public class AdminController {
         return adminService.selectUserByUuid(uuid);
     }
 
-    @GetMapping("/user")
-    @ResponseBody
-    public List<UserPo> selectAllUser() throws ServiceException {
-        return adminService.selectAllUsers();
-    }
 
     @DeleteMapping("/user/{uuid}")
     @ResponseBody
