@@ -70,6 +70,15 @@ public class UserDao extends AbstractDao<UserPo> {
         }
     }
 
+    public UserPo selectForLogin(UserPo userPo) throws ServiceException {
+        try {
+            return getMapper(UserMapper.class).selectForLogin(userPo);
+        } catch (Exception e) {
+            log.error("Select users for login failed, username is: {}", userPo.getName());
+            throw new ServiceException(e);
+        }
+    }
+
     public int updateByPrimaryKeySelective(UserPo record) throws ServiceException {
         if (record == null) {
             return 0;
