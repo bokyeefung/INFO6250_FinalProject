@@ -4,6 +4,7 @@
 
 package com.bokyeefung.webtools.cbb.model.dao.entity;
 
+import com.bokyeefung.webtools.cbb.model.constants.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class UserPo {
     /**
      * 密码
      */
-    @JsonIgnore
+    @JsonProperty("passwd")
     private String passwd;
 
     /**
@@ -73,7 +74,7 @@ public class UserPo {
      * 实体类型
      */
     @JsonProperty("entity")
-    private String entity;
+    private UserEntity entity;
 
     /**
      * 角色

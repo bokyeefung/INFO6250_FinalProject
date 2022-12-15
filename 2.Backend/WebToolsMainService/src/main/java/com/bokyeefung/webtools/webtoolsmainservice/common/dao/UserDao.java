@@ -4,11 +4,14 @@
 
 package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
 
+import com.bokyeefung.webtools.cbb.model.constants.UserEntity;
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -18,6 +21,15 @@ public class UserDao extends AbstractDao<UserPo> {
             return getMapper(UserMapper.class).deleteByPrimaryKey(uuid);
         } catch (Exception e) {
             log.error("Delete user by uuid failed, uuid is: {}", uuid);
+            throw new ServiceException(e);
+        }
+    }
+
+    public int deleteByUuidAndEntity(String uuid, UserEntity entity) throws ServiceException {
+        try {
+            return getMapper(UserMapper.class).deleteByUuidAndEntity(uuid, entity.toString());
+        } catch (Exception e) {
+            log.error("Delete user by uuid failed, uuid is: {}, entity is: {}", uuid, entity);
             throw new ServiceException(e);
         }
     }
@@ -45,6 +57,15 @@ public class UserDao extends AbstractDao<UserPo> {
             return getMapper(UserMapper.class).selectByPrimaryKey(uuid);
         } catch (Exception e) {
             log.error("Select user by uuid failed, uuid is: {}", uuid);
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<UserPo> selectByEntity(UserEntity entity) throws ServiceException {
+        try {
+            return getMapper(UserMapper.class).selectByEntity(entity.toString());
+        } catch (Exception e) {
+            log.error("Select users by entity failed, entity is: {}", entity);
             throw new ServiceException(e);
         }
     }

@@ -22,6 +22,21 @@
         from tbl_user
         where UUID = #{uuid,jdbcType=VARCHAR}
     </select>
+
+    <!-- 查询指定实体类型下的全部用户，不包括admin用户 -->
+    <select id="selectByEntity" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from tbl_user
+        where entity = #{entity,jdbcType=VARCHAR} and role &lt;&gt; 1
+    </select>
+
+    <!-- 删除用户 -->
+    <delete id="deleteByUuidAndEntity" parameterType="java.lang.String">
+        delete
+        from tbl_user
+        where UUID = #{uuid,jdbcType=VARCHAR} and entity = #{entity,jdbcType=VARCHAR} and role &lt;&gt; 1
+    </delete>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from tbl_user
@@ -31,11 +46,11 @@
         <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into tbl_user (GROUP_ID, `NAME`, PASSWD,
+        insert into tbl_user (UUID, GROUP_ID, `NAME`, PASSWD,
         CHANGE_PASSWD_TIME, EMAIL, PHONE,
         ADDRESS, ENTITY, `ROLE`
         )
-        values (#{groupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+        values (#{uuid,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
         #{changePasswdTime,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
         #{address,jdbcType=VARCHAR}, #{entity,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}
         )
@@ -46,6 +61,9 @@
         </selectKey>
         insert into tbl_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                UUID,
+            </if>
             <if test="groupId != null">
                 GROUP_ID,
             </if>
@@ -75,6 +93,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
             <if test="groupId != null">
                 #{groupId,jdbcType=VARCHAR},
             </if>
