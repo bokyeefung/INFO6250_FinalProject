@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bokyeefung.webtools.webtoolsmainservice.dao.mapper.RelationMapper">
+<mapper namespace="com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.RelationMapper">
     <resultMap id="BaseResultMap" type="com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo">
         <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
         <result column="SOURCE_ID" jdbcType="VARCHAR" property="sourceId"/>
@@ -21,14 +21,14 @@
         from tbl_relation
         where UUID = #{uuid,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
+    <insert id="insert" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo">
         <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into tbl_relation (SOURCE_ID, DESTINATION_ID)
         values (#{sourceId,jdbcType=VARCHAR}, #{destinationId,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
+    <insert id="insertSelective" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo">
         <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -50,7 +50,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
+    <update id="updateByPrimaryKeySelective" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo">
         update tbl_relation
         <set>
             <if test="sourceId != null">
@@ -62,74 +62,7 @@
         </set>
         where UUID = #{uuid,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
-        update tbl_relation
-        set SOURCE_ID      = #{sourceId,jdbcType=VARCHAR},
-            DESTINATION_ID = #{destinationId,jdbcType=VARCHAR}
-        where UUID = #{uuid,jdbcType=VARCHAR}
-    </update>
-    <resultMap id="BaseResultMap" type="cn.net.powerinv.coss4.entity.TblRelation">
-        <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
-        <result column="SOURCE_ID" jdbcType="VARCHAR" property="sourceId"/>
-        <result column="DESTINATION_ID" jdbcType="VARCHAR" property="destinationId"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        UUID
-        , SOURCE_ID, DESTINATION_ID
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tbl_relation
-        where UUID = #{uuid,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete
-        from tbl_relation
-        where UUID = #{uuid,jdbcType=VARCHAR}
-    </delete>
-    <insert id="insert" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
-        insert into tbl_relation (UUID, SOURCE_ID, DESTINATION_ID)
-        values (#{uuid,jdbcType=VARCHAR}, #{sourceId,jdbcType=VARCHAR}, #{destinationId,jdbcType=VARCHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
-        insert into tbl_relation
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uuid != null">
-                UUID,
-            </if>
-            <if test="sourceId != null">
-                SOURCE_ID,
-            </if>
-            <if test="destinationId != null">
-                DESTINATION_ID,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="uuid != null">
-                #{uuid,jdbcType=VARCHAR},
-            </if>
-            <if test="sourceId != null">
-                #{sourceId,jdbcType=VARCHAR},
-            </if>
-            <if test="destinationId != null">
-                #{destinationId,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
-        update tbl_relation
-        <set>
-            <if test="sourceId != null">
-                SOURCE_ID = #{sourceId,jdbcType=VARCHAR},
-            </if>
-            <if test="destinationId != null">
-                DESTINATION_ID = #{destinationId,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where UUID = #{uuid,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="cn.net.powerinv.coss4.entity.TblRelation">
+    <update id="updateByPrimaryKey" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo">
         update tbl_relation
         set SOURCE_ID      = #{sourceId,jdbcType=VARCHAR},
             DESTINATION_ID = #{destinationId,jdbcType=VARCHAR}

@@ -2,14 +2,16 @@
  * Copyright (c) bokyeefung. 2022-2022. All rights reserved.
  */
 
-package com.bokyeefung.webtools.webtoolsmainservice.dao;
+package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
 
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
-import com.bokyeefung.webtools.webtoolsmainservice.dao.mapper.UserMapper;
+import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class UserDao extends AbstractDao<UserPo> {
     public int deleteByPrimaryKey(String uuid) throws ServiceException {
         try {

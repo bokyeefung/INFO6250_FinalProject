@@ -4,7 +4,8 @@ server:
     session:
       timeout: 120
       cookie:
-        path: /rest
+        path: /
+    context-path: /rest
 
 spring:
   datasource:
@@ -17,4 +18,4 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/mariadb/*Mapper.xml
-  type-aliases-package: com.bokyeefung.webtools.webtoolsmainservice.dao.mapper
+  type-aliases-package: com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper

@@ -2,7 +2,7 @@
  * Copyright (c) bokyeefung. 2022-2022. All rights reserved.
  */
 
-package com.bokyeefung.webtools.webtoolsmainservice.dao;
+package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
 
 import com.bokyeefung.webtools.cbb.model.dao.mapper.AbstractMapper;
 import com.bokyeefung.webtools.cbb.util.spring.SpringContextHelper;
