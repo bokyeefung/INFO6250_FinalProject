@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bokyeefung.webtools.webtoolsmainservice.dao.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.bokyeefung.webtools.cbb.model.dao.entity.UserPo">
+        <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
+        <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PASSWD" jdbcType="VARCHAR" property="passwd"/>
+        <result column="CHANGE_PASSWD_TIME" jdbcType="BIGINT" property="changePasswdTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="ENTITY" jdbcType="VARCHAR" property="entity"/>
+        <result column="ROLE" jdbcType="INTEGER" property="role"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        UUID, GROUP_ID, `NAME`, PASSWD, CHANGE_PASSWD_TIME, EMAIL, PHONE, ADDRESS, ENTITY, `ROLE`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from tbl_user
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tbl_user (GROUP_ID, `NAME`, PASSWD,
+        CHANGE_PASSWD_TIME, EMAIL, PHONE,
+        ADDRESS, ENTITY, `ROLE`
+        )
+        values (#{groupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+        #{changePasswdTime,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{entity,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                GROUP_ID,
+            </if>
+            <if test="name != null">
+                `NAME`,
+            </if>
+            <if test="passwd != null">
+                PASSWD,
+            </if>
+            <if test="changePasswdTime != null">
+                CHANGE_PASSWD_TIME,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="phone != null">
+                PHONE,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="entity != null">
+                ENTITY,
+            </if>
+            <if test="role != null">
+                `ROLE`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="changePasswdTime != null">
+                #{changePasswdTime,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entity != null">
+                #{entity,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        update tbl_user
+        <set>
+            <if test="groupId != null">
+                GROUP_ID = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `NAME` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                PASSWD = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="changePasswdTime != null">
+                CHANGE_PASSWD_TIME = #{changePasswdTime,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                PHONE = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entity != null">
+                ENTITY = #{entity,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                `ROLE` = #{role,jdbcType=INTEGER},
+            </if>
+        </set>
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        update tbl_user
+        set GROUP_ID           = #{groupId,jdbcType=VARCHAR},
+            `NAME`             = #{name,jdbcType=VARCHAR},
+            PASSWD             = #{passwd,jdbcType=VARCHAR},
+            CHANGE_PASSWD_TIME = #{changePasswdTime,jdbcType=BIGINT},
+            EMAIL              = #{email,jdbcType=VARCHAR},
+            PHONE              = #{phone,jdbcType=VARCHAR},
+            ADDRESS            = #{address,jdbcType=VARCHAR},
+            ENTITY             = #{entity,jdbcType=VARCHAR},
+            `ROLE`             = #{role,jdbcType=INTEGER}
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <resultMap id="BaseResultMap" type="cn.net.powerinv.coss4.entity.TblUser">
+        <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
+        <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PASSWD" jdbcType="VARCHAR" property="passwd"/>
+        <result column="CHANGE_PASSWD_TIME" jdbcType="BIGINT" property="changePasswdTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="ENTITY" jdbcType="VARCHAR" property="entity"/>
+        <result column="ROLE" jdbcType="INTEGER" property="role"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        UUID
+        , GROUP_ID, `NAME`, PASSWD, CHANGE_PASSWD_TIME, EMAIL, PHONE, ADDRESS, ENTITY,
+    `ROLE`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from tbl_user
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        insert into tbl_user (UUID, GROUP_ID, `NAME`,
+                              PASSWD, CHANGE_PASSWD_TIME, EMAIL,
+                              PHONE, ADDRESS, ENTITY,
+                              `ROLE`)
+        values (#{uuid,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{passwd,jdbcType=VARCHAR}, #{changePasswdTime,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{entity,jdbcType=VARCHAR},
+                #{role,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                UUID,
+            </if>
+            <if test="groupId != null">
+                GROUP_ID,
+            </if>
+            <if test="name != null">
+                `NAME`,
+            </if>
+            <if test="passwd != null">
+                PASSWD,
+            </if>
+            <if test="changePasswdTime != null">
+                CHANGE_PASSWD_TIME,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="phone != null">
+                PHONE,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="entity != null">
+                ENTITY,
+            </if>
+            <if test="role != null">
+                `ROLE`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="changePasswdTime != null">
+                #{changePasswdTime,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entity != null">
+                #{entity,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        update tbl_user
+        <set>
+            <if test="groupId != null">
+                GROUP_ID = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `NAME` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                PASSWD = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="changePasswdTime != null">
+                CHANGE_PASSWD_TIME = #{changePasswdTime,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                PHONE = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entity != null">
+                ENTITY = #{entity,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                `ROLE` = #{role,jdbcType=INTEGER},
+            </if>
+        </set>
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.net.powerinv.coss4.entity.TblUser">
+        update tbl_user
+        set GROUP_ID           = #{groupId,jdbcType=VARCHAR},
+            `NAME`             = #{name,jdbcType=VARCHAR},
+            PASSWD             = #{passwd,jdbcType=VARCHAR},
+            CHANGE_PASSWD_TIME = #{changePasswdTime,jdbcType=BIGINT},
+            EMAIL              = #{email,jdbcType=VARCHAR},
+            PHONE              = #{phone,jdbcType=VARCHAR},
+            ADDRESS            = #{address,jdbcType=VARCHAR},
+            ENTITY             = #{entity,jdbcType=VARCHAR},
+            `ROLE`             = #{role,jdbcType=INTEGER}
+        where UUID = #{uuid,jdbcType=VARCHAR}
+    </update>
+</mapper>
