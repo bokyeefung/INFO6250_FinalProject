@@ -16,6 +16,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <webtoolsmodelcbb.version>0.0.1-SNAPSHOT</webtoolsmodelcbb.version>
+        <webtoolsutillcbb.version>0.0.1-SNAPSHOT</webtoolsutillcbb.version>
     </properties>
 
     <dependencies>
@@ -38,6 +39,11 @@
             <groupId>com.bokyeefung</groupId>
             <artifactId>WebToolsModelCBB</artifactId>
             <version>${webtoolsmodelcbb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bokyeefung</groupId>
+            <artifactId>WebToolsUtilCBB</artifactId>
+            <version>${webtoolsutillcbb.version}</version>
         </dependency>
 
         <dependency>

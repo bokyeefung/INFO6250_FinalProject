@@ -5,9 +5,10 @@
 package com.bokyeefung.webtools.webtoolsmainservice.dao;
 
 import com.bokyeefung.webtools.cbb.model.dao.mapper.AbstractMapper;
+import com.bokyeefung.webtools.cbb.util.spring.SpringContextHelper;
 
-public class AbstractDao<T extends AbstractMapper<U>, U> {
-    protected T getMapper(Class<T> mapperClass) {
-        return null;
+public abstract class AbstractDao<T> {
+    protected <U extends AbstractMapper<T>> U getMapper(Class<U> mapperClass) {
+        return SpringContextHelper.getBean(mapperClass);
     }
 }
