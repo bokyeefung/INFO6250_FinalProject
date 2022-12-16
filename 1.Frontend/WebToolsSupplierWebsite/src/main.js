@@ -23,8 +23,9 @@ Vue.use(Fragment.Plugin);
 // 使用ElementUI和颜色主题
 import ElementUI from 'element-ui';
 import { Message } from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+Vue.use(ElementUI, {locale});
 Vue.prototype.$message = Message;
 
 // 引入全局CSS样式

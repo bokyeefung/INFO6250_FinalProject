@@ -1,6 +1,6 @@
 <template>
     <div id="home-container" class="home-container">
-        欢迎使用
+        Welcome!
     </div>
 </template>
 
@@ -10,6 +10,9 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.home-container {
+    box-sizing: border-box;
+    padding: 20px;
+}
 </style>

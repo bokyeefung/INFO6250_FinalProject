@@ -50,8 +50,9 @@
         data() {
             return {
                 navigation: [
-                    { name: '主页', icon: 'el-icon-s-home', href: '/'},
-                    { name: '货源管理', icon: 'el-icon-s-order', href: '/source' }
+                    { name: 'Home', icon: 'el-icon-s-home', href: '/'},
+                    { name: 'User Management', icon: 'el-icon-s-order', href: '/user' },
+                    { name: 'Raw Material Management', icon: 'el-icon-s-order', href: '/source' }
                 ],
                 isCollapse: false,
             }

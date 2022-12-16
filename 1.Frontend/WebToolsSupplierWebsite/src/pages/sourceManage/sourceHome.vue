@@ -112,11 +112,11 @@
 
 <script>
     import sourceManagement from "../../assets/js/api/sourceManagement/sourceManagement";
-    import format from "../../assets/js/common/format";
+    import {formatDate, formatMoney} from "../../assets/js/common/format";
 
     export default {
         name: 'sourceHome',
-        mixins: [sourceManagement, format],
+        mixins: [sourceManagement],
         data() {
             return {
                 loading: false,
@@ -134,6 +134,8 @@
             this.getAllListImpl();
         },
         methods: {
+            formatDate,
+            formatMoney,
             getAllListImpl() {
                 let that = this;
                 that.loading = true;

@@ -33,8 +33,8 @@ export default {
             form: {
                 image: '',
                 userLogin: {
-                    username: 'manager',
-                    password: 'Changeme_123',
+                    username: '',
+                    password: '',
                     verification: ''
                 },
                 errorCode: {
@@ -43,9 +43,8 @@ export default {
             },
             rules: {
                 userRule: {
-                    username: {required: true, message: '用户名/邮箱不能为空', trigger: 'blur'},
-                    password: {required: true, message: '密码不能为空', trigger: 'blur'},
-                    // verification: {required: true, validator: imageVerificationRule, trigger: 'blur'}
+                    username: {required: true, message: 'Username cannot be empty', trigger: 'blur'},
+                    password: {required: true, message: 'Password cannot be empty', trigger: 'blur'}
                 }
             }
         }

@@ -27,6 +27,14 @@ export default new Router({
           path: '/source/change/:id',
           component: () => import('@/pages/sourceManage/sourceChange')
         },
+        {
+          path: '/user',
+          component: () => import('@/pages/userManage/userHome')
+        },
+        {
+          path: '/user/add',
+          component: () => import('@/pages/userManage/userAdd')
+        },
       ]
     },
     {
