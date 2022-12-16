@@ -4,13 +4,9 @@
 
 package com.bokyeefung.webtools.webtoolsmainservice.supplier.service;
 
-import com.bokyeefung.webtools.cbb.model.constants.UserEntity;
 import com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo;
 import com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo;
-import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
-import com.bokyeefung.webtools.cbb.model.exception.UserNotLoginException;
-import com.bokyeefung.webtools.webtoolsmainservice.common.cache.UserSecurityCache;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.ArticleDao;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.OrderDao;
 import com.bokyeefung.webtools.webtoolsmainservice.supplier.service.impl.ManagerService;
@@ -21,8 +17,6 @@ import java.util.List;
 
 @Service("SupplierManagerServiceImpl")
 public class ManagerServiceImpl implements ManagerService {
-    @Autowired
-    private UserSecurityCache userSecurityCache;
 
     @Autowired
     private ArticleDao articleDao;
@@ -56,16 +50,12 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<OrderPo> queryOrderList() throws ServiceException {
-        UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
-        if (userPo == null) {
-            throw new UserNotLoginException();
-        }
-        return orderDao.selectByGroupId(userPo.getGroupId());
+    public List<OrderPo> queryOrderList(String groupId) throws ServiceException {
+        return orderDao.selectByGroupId(groupId);
     }
 
     @Override
-    public OrderPo confirmOrder(String uuid) throws ServiceException {
-        return null;
+    public void confirmOrder(String uuid, String groupId) throws ServiceException {
+        orderDao.confirmOrder(uuid, groupId);
     }
 }

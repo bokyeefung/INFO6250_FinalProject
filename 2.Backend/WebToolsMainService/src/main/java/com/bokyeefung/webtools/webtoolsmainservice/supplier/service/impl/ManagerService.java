@@ -17,6 +17,6 @@ public interface ManagerService {
     ArticlePo selectArticleByUuid() throws ServiceException;
     ArticlePo updateArticleCost() throws ServiceException;
 
-    List<OrderPo> queryOrderList() throws ServiceException;
-    OrderPo confirmOrder(String uuid) throws ServiceException;
+    List<OrderPo> queryOrderList(String groupId) throws ServiceException;
+    void confirmOrder(String uuid, String groupId) throws ServiceException;
 }
