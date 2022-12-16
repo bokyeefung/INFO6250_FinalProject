@@ -49,15 +49,29 @@
         mixins: [config, loginAndLogout, message],
         data() {
             return {
-                navigation: [
-                    { name: 'Home', icon: 'el-icon-s-home', href: '/'},
-                    { name: 'User Management', icon: 'el-icon-s-order', href: '/user' },
-                    { name: 'Raw Material Management', icon: 'el-icon-s-order', href: '/source' }
-                ],
+                navigation: [],
                 isCollapse: false,
             }
         },
+        mounted() {
+            this.getNavigation();
+        },
         methods: {
+            getNavigation() {
+                const baseNavigation = [
+                    { name: 'Home', icon: 'el-icon-s-home', href: '/'},
+                    { name: 'User Management', icon: 'el-icon-s-order', href: '/user', role: [1] },
+                    { name: 'Supply Chain Management', icon: 'el-icon-s-order', href: '/supply', role: [2] },
+                    { name: 'Raw Material Management', icon: 'el-icon-s-order', href: '/source', role: [3] }
+                ];
+                const currentNavigation = [];
+                baseNavigation.forEach(item => {
+                    if (item.role === undefined || item.role.length === 0 || item.role.includes(this.user.role)) {
+                        currentNavigation.push(item);
+                    }
+                })
+                this.navigation = currentNavigation;
+            },
             collapse() {
                 this.isCollapse = !this.isCollapse;
             },
@@ -76,7 +90,7 @@
             },
             logoutImpl() {
                 let that = this;
-                that.logout(() => {}, that.errorMessage, '/login?from=' + this.$route.path);
+                that.logout(() => {}, that.errorMessage);
             }
         }
     }

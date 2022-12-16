@@ -21,10 +21,10 @@ export default {
                 that.errorMessage('Login failed.');
             });
         },
-        logout(success, failed, targetUrl) {
+        logout(success, failed) {
             let that = this;
             this.$axios.post('/api/supplier/security/logout', {}).then(result => {
-                that.clearUserInfo(targetUrl);
+                that.clearUserInfo();
                 that.successMessage('Logout Success.');
                 success(result.data.msg);
             }).catch(err => {

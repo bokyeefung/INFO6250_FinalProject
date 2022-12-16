@@ -59,8 +59,8 @@ export default {
             that.form.errorCode.userLoginError = '';
             that.$refs['userLoginForm'].validate((valid) => {
                 if (valid) {
-                    that.login(data, function () {
-                        that.goBack();
+                    that.login(data, () => {
+                        setTimeout(() => that.goBack(), 200);
                     }, function (msg) {
                         that.form.errorCode.userLoginError = msg;
                         return false;
@@ -71,13 +71,7 @@ export default {
             });
         },
         goBack() {
-            let that = this;
-            let from = that.$route.query.from;
-            if (!!from) {
-                that.$router.push({path: from});
-            } else {
-                that.$router.push({path: '/'});
-            }
+            this.$router.push({path: '/'});
         },
     }
 }

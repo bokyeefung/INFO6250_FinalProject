@@ -35,6 +35,10 @@ export default new Router({
           path: '/user/add',
           component: () => import('@/pages/userManage/userAdd')
         },
+        {
+          path: '/supply',
+          component: () => import('@/pages/supplyChainManagement/supplyChainHome')
+        },
       ]
     },
     {
