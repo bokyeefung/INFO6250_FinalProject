@@ -38,8 +38,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<ArticlePo> selectAllArticle() throws ServiceException {
-        return null;
+    public List<ArticlePo> selectAllArticle(String groupId) throws ServiceException {
+        return articleDao.selectByGroupId(groupId);
     }
 
     @Override

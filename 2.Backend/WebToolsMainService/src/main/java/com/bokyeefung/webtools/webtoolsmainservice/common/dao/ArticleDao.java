@@ -3,11 +3,14 @@
  */
 
 package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
+
 import com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.ArticleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -44,6 +47,15 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
             return getMapper(ArticleMapper.class).selectByPrimaryKey(uuid);
         } catch (Exception e) {
             log.error("Select article by uuid failed, uuid is: {}", uuid);
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<ArticlePo> selectByGroupId(String groupId) throws ServiceException {
+        try {
+            return getMapper(ArticleMapper.class).selectByGroupId(groupId);
+        } catch (Exception e) {
+            log.error("Select article by groupId failed, groupId is: {}", groupId);
             throw new ServiceException(e);
         }
     }

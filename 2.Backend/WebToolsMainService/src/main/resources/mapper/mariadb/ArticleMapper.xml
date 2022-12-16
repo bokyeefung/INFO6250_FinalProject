@@ -19,6 +19,11 @@
         from tbl_article
         where UUID = #{uuid,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectByGroupId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM TBL_ARTICLE WHERE GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from tbl_article

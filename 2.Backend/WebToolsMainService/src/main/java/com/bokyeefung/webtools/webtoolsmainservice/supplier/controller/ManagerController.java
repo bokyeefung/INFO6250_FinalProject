@@ -61,8 +61,14 @@ public class ManagerController {
 
     }
 
+    @GetMapping("/article")
+    @ResponseBody
     public List<ArticlePo> selectAllArticle() throws ServiceException {
-        return null;
+        UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        return managerService.selectAllArticle(userPo.getGroupId());
     }
 
     public ArticlePo selectArticleByUuid() throws ServiceException {
