@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service("SupplierManagerServiceImpl")
 public class ManagerServiceImpl implements ManagerService {
@@ -26,7 +27,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ArticlePo createArticle(ArticlePo articlePo) throws ServiceException {
-        return null;
+        articlePo.setUuid(UUID.randomUUID().toString());
+        articleDao.insert(articlePo);
+        return articlePo;
     }
 
     @Override
