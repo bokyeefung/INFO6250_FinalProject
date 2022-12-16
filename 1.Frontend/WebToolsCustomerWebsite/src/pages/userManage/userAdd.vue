@@ -53,7 +53,7 @@ export default {
                 age: ''
             },
             ruleForm: {
-                groupId: "37132451-a0b5-4cbf-90e6-508ff12aaa58",
+                groupId: "16879fdc-bf17-4377-a4bd-0777fb1952ab",
                 name: "",
                 passwd: "",
                 email: "",
