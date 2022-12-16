@@ -4,7 +4,7 @@
 
 package com.bokyeefung.webtools.cbb.model.exception;
 
-public class PermissionDeniedException extends Exception {
+public class PermissionDeniedException extends ServiceException {
     private static final String ERROR_INFO = "Permission denied";
 
     public PermissionDeniedException() {

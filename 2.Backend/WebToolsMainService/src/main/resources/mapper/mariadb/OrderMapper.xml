@@ -81,4 +81,45 @@
             IS_CONFIRMED = #{isConfirmed,jdbcType=INTEGER}
         where UUID = #{uuid,jdbcType=VARCHAR}
     </update>
+
+
+    <resultMap id="RichResultMap" type="com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo">
+        <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
+        <result column="RELATION_ID" jdbcType="VARCHAR" property="relationId"/>
+        <result column="NUMBER" jdbcType="INTEGER" property="number"/>
+        <result column="IS_CONFIRMED" jdbcType="INTEGER" property="isConfirmed"/>
+        <association property="srcArticle" javaType="com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo">
+            <id column="SRC_UUID" jdbcType="VARCHAR" property="uuid"/>
+            <result column="SRC_GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+            <result column="SRC_NAME" jdbcType="VARCHAR" property="name"/>
+            <result column="SRC_MONEY_COST" jdbcType="INTEGER" property="moneyCost"/>
+            <result column="SRC_TIME_COST" jdbcType="INTEGER" property="timeCost"/>
+            <result column="SRC_NUMBER" jdbcType="INTEGER" property="number"/>
+        </association>
+        <association property="dstArticle" javaType="com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo">
+            <id column="DST_UUID" jdbcType="VARCHAR" property="uuid"/>
+            <result column="DST_GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+            <result column="DST_NAME" jdbcType="VARCHAR" property="name"/>
+            <result column="DST_MONEY_COST" jdbcType="INTEGER" property="moneyCost"/>
+            <result column="DST_TIME_COST" jdbcType="INTEGER" property="timeCost"/>
+            <result column="DST_NUMBER" jdbcType="INTEGER" property="number"/>
+        </association>
+    </resultMap>
+    <sql id="Src_Article_Column_List">
+        A.UUID AS SRC_UUID, A.GROUP_ID AS SRC_GROUP_ID, A.`NAME` AS SRC_NAME, A.MONEY_COST AS SRC_MONEY_COST,
+        A.TIME_COST AS SRC_TIME_COST, A.`NUMBER` AS SRC_NUMBER
+    </sql>
+    <sql id="Dst_Article_Column_List">
+        AD.UUID AS DST_UUID, AD.GROUP_ID AS DST_GROUP_ID, AD.`NAME` AS DST_NAME, AD.MONEY_COST AS DST_MONEY_COST,
+        AD.TIME_COST AS DST_TIME_COST, AD.`NUMBER` AS DST_NUMBER
+    </sql>
+
+    <select id="selectByGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
+            O.IS_CONFIRMED FROM TBL_ORDER O
+        LEFT JOIN TBL_RELATION R ON R.UUID = O.RELATION_ID
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
+        LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+        WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </select>
 </mapper>

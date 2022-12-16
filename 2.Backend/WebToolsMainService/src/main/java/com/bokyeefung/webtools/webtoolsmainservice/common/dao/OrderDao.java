@@ -3,11 +3,14 @@
  */
 
 package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
+
 import com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.OrderMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -57,6 +60,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
         } catch (Exception e) {
             log.error("Update order by uuid failed, uuid is: {}", record.getUuid());
             throw new ServiceException(e);
+        }
+    }
+
+    public List<OrderPo> selectByGroupId(String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByGroupId(groupId);
+        } catch (Exception e) {
+            log.error("Select order by groupId failed, uuid is: {}", groupId);
+            throw new ServiceException("Select order by groupId failed", e);
         }
     }
 }

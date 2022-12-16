@@ -43,4 +43,9 @@ public class OrderPo {
      */
     @JsonProperty("isConfirmed")
     private int isConfirmed;
+
+    @JsonProperty("srcArticle")
+    private ArticlePo srcArticle;
+    @JsonProperty("dstArticle")
+    private ArticlePo dstArticle;
 }
