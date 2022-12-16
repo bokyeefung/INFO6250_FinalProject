@@ -17,17 +17,13 @@
         <div class="right-box">
             <div class="right-header-box">
                 <div class="user-function-box">
-                    <el-link v-if="true" type="primary" :underline="false" @click="login"
+                    <el-link v-if="!isLogin" type="primary" :underline="false" @click="loginFunction"
                              style="height: 36px; line-height: 36px;">登录 / 注册</el-link>
                     <div v-else style="height: 100%; display: flex; flex-direction: row;">
-                        <el-avatar :size="36"></el-avatar>
-                        <el-dropdown style="display: inline-block; margin-left: 10px; height: 36px;">
-                            <span class="el-dropdown-link">昵称<i class="el-icon-arrow-down el-icon--right"></i></span>
+                        <el-dropdown style="display: inline-block; margin-left: 10px; height: 36px;" @command="handleCommand">
+                            <span class="el-dropdown-link">{{ user.name }}<i class="el-icon-arrow-down el-icon--right"></i></span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>用户资料</el-dropdown-item>
-                                <el-dropdown-item>设置</el-dropdown-item>
-                                <el-dropdown-item>帮助</el-dropdown-item>
-                                <el-dropdown-item>退出</el-dropdown-item>
+                                <el-dropdown-item command="logoutImpl">Exit</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -41,32 +37,23 @@
 
 <script>
     import recursionSubmenu from '../../components/recursion-submenu/recursion-submenu';
+    import config from "../../assets/js/common/config";
+    import loginAndLogout from "../../assets/js/api/userManagement/loginAndLogout";
+    import message from "../../assets/js/common/message";
 
     export default {
         name: "navigation",
         components: {
             recursionSubmenu
         },
-        computed: {
-            windowSize() {
-                return this.$store.state.windowSize;
-            }
-        },
-        watch: {
-            windowSize: {
-                handler(newVal) {
-                    this.isCollapse = newVal.width < 1200;
-                },
-                deep: true
-            }
-        },
+        mixins: [config, loginAndLogout, message],
         data() {
             return {
                 navigation: [
                     { name: '主页', icon: 'el-icon-s-home', href: '/'},
                     { name: '货源管理', icon: 'el-icon-s-order', href: '/source' }
                 ],
-                isCollapse: document.body.clientWidth < 1200,
+                isCollapse: false,
             }
         },
         methods: {
@@ -78,8 +65,17 @@
                     this.collapse();
                 }
             },
-            login() {
-                this.$router.push('/login');
+            loginFunction() {
+                this.$router.push('/login?from=' + this.$route.path);
+            },
+            handleCommand(command) {
+                if (command === "logoutImpl") {
+                    this.logoutImpl();
+                }
+            },
+            logoutImpl() {
+                let that = this;
+                that.logout(() => {}, that.errorMessage, '/login?from=' + this.$route.path);
             }
         }
     }

@@ -6,16 +6,7 @@
 
 <script>
 export default {
-  name: 'App',
-  mounted() {
-    let that = this;
-    that.$store.state.windowSize.width = document.body.clientWidth;
-    that.$store.state.windowSize.height = document.body.clientHeight;
-    window.onresize = () => {
-      that.$store.state.windowSize.width = document.body.clientWidth;
-      that.$store.state.windowSize.height = document.body.clientHeight;
-    }
-  }
+  name: 'App'
 }
 </script>
 

@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+Vue.prototype.store = store;
+
 // 引入Ajax和跨域相关组件
 import Axios from 'axios';
 Vue.prototype.$axios = Axios;
