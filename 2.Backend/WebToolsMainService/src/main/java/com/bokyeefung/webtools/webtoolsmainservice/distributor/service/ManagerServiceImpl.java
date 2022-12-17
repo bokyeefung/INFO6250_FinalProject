@@ -108,13 +108,13 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public List<OrderPo> queryOrderList(String groupId) throws ServiceException {
-        return orderDao.selectByGroupId(groupId);
+        return orderDao.selectCommodityByGroupId(groupId);
     }
 
     @Override
     @Transactional
     public void confirmOrder(String uuid, String groupId) throws ServiceException {
-        OrderPo orderPo = orderDao.selectByUuidAndGroupId(uuid, groupId);
+        OrderPo orderPo = orderDao.selectCommodityByUuidAndGroupId(uuid, groupId);
         if (orderPo.getNumber() > orderPo.getSrcArticle().getNumber()) {
             throw new ServiceException("Insufficient inventory of raw material " + orderPo.getSrcArticle().getName());
         }
@@ -123,6 +123,6 @@ public class ManagerServiceImpl implements ManagerService {
         srcMap.put("groupId", orderPo.getSrcArticle().getGroupId());
         srcMap.put("number", orderPo.getSrcArticle().getNumber() - orderPo.getNumber());
         articleDao.updateCost(srcMap);
-        orderDao.confirmOrder(uuid, groupId);
+        orderDao.confirmCommodityOrder(uuid, groupId);
     }
 }

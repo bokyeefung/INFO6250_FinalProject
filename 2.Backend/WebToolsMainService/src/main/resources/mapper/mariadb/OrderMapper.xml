@@ -139,6 +139,14 @@
         ORDER BY O.IS_CONFIRMED ASC
     </select>
 
+    <select id="selectCommodityByGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = O.RELATION_ID
+        WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+        ORDER BY O.IS_CONFIRMED ASC
+    </select>
+
     <select id="selectByUuidAndHostGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
         SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
         O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
@@ -164,6 +172,13 @@
         WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectCommodityByUuidAndGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = O.RELATION_ID
+        WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </select>
+
     <update id="confirmOrder" parameterType="java.lang.String">
         UPDATE TBL_ORDER O
         SET IS_CONFIRMED = 1
@@ -171,6 +186,15 @@
                 SELECT 1 FROM TBL_RELATION R
                                   LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
                 WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{uuid,jdbcType=VARCHAR} AND R.UUID = O.RELATION_ID
+            )
+    </update>
+
+    <update id="confirmCommodityOrder" parameterType="java.lang.String">
+        UPDATE TBL_ORDER O
+        SET IS_CONFIRMED = 1
+        WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND EXISTS(
+                SELECT 1 FROM TBL_ARTICLE A
+                WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{uuid,jdbcType=VARCHAR} AND A.UUID = O.RELATION_ID
             )
     </update>
 

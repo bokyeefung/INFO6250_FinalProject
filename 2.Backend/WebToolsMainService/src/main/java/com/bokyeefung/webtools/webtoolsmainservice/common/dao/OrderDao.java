@@ -90,6 +90,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
         }
     }
 
+    public List<OrderPo> selectCommodityByGroupId(String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectCommodityByGroupId(groupId);
+        } catch (Exception e) {
+            log.error("Select order by groupId failed, uuid is: {}", groupId);
+            throw new ServiceException("Select order by groupId failed", e);
+        }
+    }
+
     public OrderPo selectByUuidAndHostGroupId(String uuid, String groupId) throws ServiceException {
         try {
             return getMapper(OrderMapper.class).selectByUuidAndHostGroupId(uuid, groupId);
@@ -117,9 +126,27 @@ public class OrderDao extends AbstractDao<OrderPo> {
         }
     }
 
+    public OrderPo selectCommodityByUuidAndGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectCommodityByUuidAndGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Select order by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
+            throw new ServiceException("Select order by groupId failed", e);
+        }
+    }
+
     public void confirmOrder(String uuid, String groupId) throws ServiceException {
         try {
             getMapper(OrderMapper.class).confirmOrder(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Confirm order by uuid failed, uuid is: {}", uuid);
+            throw new ServiceException("Confirm order by uuid failed", e);
+        }
+    }
+
+    public void confirmCommodityOrder(String uuid, String groupId) throws ServiceException {
+        try {
+            getMapper(OrderMapper.class).confirmCommodityOrder(uuid, groupId);
         } catch (Exception e) {
             log.error("Confirm order by uuid failed, uuid is: {}", uuid);
             throw new ServiceException("Confirm order by uuid failed", e);
