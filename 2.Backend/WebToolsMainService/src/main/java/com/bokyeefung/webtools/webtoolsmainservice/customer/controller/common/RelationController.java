@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController("customerRelationController")
 @RequestMapping("/customer/common/relation")
@@ -55,16 +55,17 @@ public class RelationController {
     @GetMapping("/all")
     @ResponseBody
     public List<Map<String, Object>> queryAllRelations() throws ServiceException {
-        UserPo userPo = userSecurityCache.getUser(UserEntity.CUSTOMER); // 获取当前登录用户信息
-        if (userPo == null) {
-            throw new UserNotLoginException();
-        }
-        List<RelationPo> relationPoList = relationDao.selectByHostGroupId(userPo.getGroupId());
-        List<Map<String, Object>> solutionList = new ArrayList<>(relationPoList.size());
-        for (RelationPo relationPo : relationPoList) {
-            solutionList.add(convertToDto(relationPo, userPo.getGroupId()));
-        }
-        return solutionList;
+        List<ArticlePo> articlePoList = articleDao.selectAllCommodity();
+        return articlePoList.stream().map(article -> {
+            RelationPo relationPo = RelationPo.builder()
+                .uuid(article.getUuid())
+                .sourceId(article.getUuid())
+                .number(1)
+                .build();
+            Map<String, Object> solution = JsonUtil.fromJsonMap(JsonUtil.toJson(relationPo), String.class, Object.class);
+            solution.put("srcArticle", article);
+            return solution;
+        }).collect(Collectors.toList());
     }
 
     private Map<String, Object> convertToDto(RelationPo relationPo, String groupId) throws ServiceException {

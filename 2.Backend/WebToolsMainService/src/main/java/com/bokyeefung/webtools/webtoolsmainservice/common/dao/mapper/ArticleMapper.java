@@ -19,4 +19,6 @@ public interface ArticleMapper extends AbstractMapper<ArticlePo> {
     void deleteByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
 
     int updateCost(@Param("article") Map<String, Object> article);
+
+    List<ArticlePo> selectAllCommodity();
 }

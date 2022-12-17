@@ -103,4 +103,13 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
             throw new ServiceException("Update article by uuid failed", e);
         }
     }
+
+    public List<ArticlePo> selectAllCommodity() throws ServiceException {
+        try {
+            return getMapper(ArticleMapper.class).selectAllCommodity();
+        } catch (Exception e) {
+            log.error("Select all commodity article failed");
+            throw new ServiceException("Select all commodity article failed", e);
+        }
+    }
 }

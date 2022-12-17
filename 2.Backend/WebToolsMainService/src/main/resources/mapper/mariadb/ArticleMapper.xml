@@ -135,4 +135,11 @@
             `NUMBER`   = #{number,jdbcType=INTEGER}
         where UUID = #{uuid,jdbcType=VARCHAR}
     </update>
+
+    <select id="selectAllCommodity" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM TBL_ARTICLE A
+        WHERE EXISTS(
+            SELECT 1 FROM TBL_USER U WHERE U.GROUP_ID = A.GROUP_ID AND U.ENTITY = 'DISTRIBUTOR'
+        )
+    </select>
 </mapper>
