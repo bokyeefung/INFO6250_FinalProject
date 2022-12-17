@@ -68,6 +68,16 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public OrderPo queryHostOrder(String uuid, String groupId) throws ServiceException {
+        return orderDao.selectByUuidAndHostGroupId(uuid, groupId);
+    }
+
+    @Override
+    public void updateHostOrderNumber(OrderPo orderPo, String groupId) throws ServiceException {
+        orderDao.updateNumberByHostGroupId(orderPo, groupId);
+    }
+
+    @Override
     public List<OrderPo> queryOrderList(String groupId) throws ServiceException {
         return orderDao.selectByGroupId(groupId);
     }

@@ -73,6 +73,28 @@ public class ManagerController {
         return managerService.queryHostOrderList(userPo.getGroupId());
     }
 
+    @GetMapping("/orders/host/{uuid}")
+    @ResponseBody
+    public OrderPo queryHostOrder(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
+        UserPo userPo = userSecurityCache.getUser(UserEntity.MANUFACTURE); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        return managerService.queryHostOrder(uuid, userPo.getGroupId());
+    }
+
+    @PutMapping("/orders/host")
+    @ResponseBody
+    public void updateHostOrderNumber(@NonNull @RequestBody OrderPo orderPo) throws ServiceException {
+        ParamCheckUtil.checkParam(orderPo.getUuid(), "uuid", StringUtils::isNotEmpty);
+        ParamCheckUtil.checkParam(orderPo.getNumber(), "number", number -> number > 0);
+        UserPo userPo = userSecurityCache.getUser(UserEntity.MANUFACTURE); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        managerService.updateHostOrderNumber(orderPo, userPo.getGroupId());
+    }
+
     @GetMapping("/orders")
     @ResponseBody
     public List<OrderPo> queryOrderList() throws ServiceException {

@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonUtil {
@@ -29,6 +29,15 @@ public final class JsonUtil {
         initObjectMapper();
         try {
             return objectMapper.readValue(json, clazz);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T, U> Map<T, U> fromJsonMap(String json, Class<T> keyClazz, Class<U> valueClazz) {
+        try {
+            return objectMapper.readValue(json,
+                objectMapper.getTypeFactory().constructMapType(Map.class, keyClazz, valueClazz));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -151,9 +151,19 @@
         UPDATE TBL_ORDER O
         SET IS_CONFIRMED = 1
         WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND EXISTS(
-            SELECT 1 FROM TBL_RELATION R
-            LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
-            WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{uuid,jdbcType=VARCHAR} AND R.UUID = O.RELATION_ID
-        )
+                SELECT 1 FROM TBL_RELATION R
+                                  LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
+                WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{uuid,jdbcType=VARCHAR} AND R.UUID = O.RELATION_ID
+            )
+    </update>
+
+    <update id="updateNumberByHostGroupId">
+        UPDATE TBL_ORDER O
+        SET O.NUMBER = #{orderPo.number,jdbcType=INTEGER}
+        WHERE O.UUID = #{orderPo.uuid,jdbcType=VARCHAR} AND EXISTS(
+                SELECT 1 FROM TBL_RELATION R
+                                  LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+                WHERE AD.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{orderPo.uuid,jdbcType=VARCHAR} AND R.UUID = O.RELATION_ID
+            )
     </update>
 </mapper>

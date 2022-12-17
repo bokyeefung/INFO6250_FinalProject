@@ -16,4 +16,5 @@ public interface OrderMapper extends AbstractMapper<OrderPo> {
     OrderPo selectByUuidAndHostGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
     OrderPo selectByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
     void confirmOrder(@Param("uuid") String uuid, @Param("groupId") String groupId);
+    void updateNumberByHostGroupId(@Param("orderPo") OrderPo orderPo, @Param("groupId") String groupId);
 }

@@ -13,6 +13,8 @@ public interface ManagerService {
     OrderPo createHostOrder(OrderPo orderPo, String groupId) throws ServiceException;
     void deleteHostOrder(String uuid, String groupId) throws ServiceException;
     List<OrderPo> queryHostOrderList(String groupId) throws ServiceException;
+    OrderPo queryHostOrder(String uuid, String groupId) throws ServiceException;
+    void updateHostOrderNumber(OrderPo orderPo, String groupId) throws ServiceException;
 
     List<OrderPo> queryOrderList(String groupId) throws ServiceException;
     void confirmOrder(String uuid, String groupId) throws ServiceException;

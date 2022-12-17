@@ -107,4 +107,13 @@ public class OrderDao extends AbstractDao<OrderPo> {
             throw new ServiceException("Confirm order by uuid failed", e);
         }
     }
+
+    public void updateNumberByHostGroupId(OrderPo orderPo, String groupId) throws ServiceException {
+        try {
+            getMapper(OrderMapper.class).updateNumberByHostGroupId(orderPo, groupId);
+        } catch (Exception e) {
+            log.error("Update order by uuid failed, uuid is: {}", orderPo.getUuid());
+            throw new ServiceException("Update order by uuid failed", e);
+        }
+    }
 }
