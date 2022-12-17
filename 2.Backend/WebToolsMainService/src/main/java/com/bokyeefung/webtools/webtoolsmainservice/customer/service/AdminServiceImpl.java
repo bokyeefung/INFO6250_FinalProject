@@ -14,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component("customerAdminServiceImpl")
@@ -26,7 +24,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public UserPo createUser(UserPo userPo) throws ServiceException {
-        userPo.setUuid(UUID.randomUUID().toString());
+        String uuid = UUID.randomUUID().toString();
+        userPo.setUuid(uuid);
+        userPo.setGroupId(uuid);
         userPo.setEntity(UserEntity.CUSTOMER);
         userPo.setChangePasswdTime(-1);
         if (UserRole.PLANT_MANAGER.getRoleNumber() == userPo.getRole()) {
