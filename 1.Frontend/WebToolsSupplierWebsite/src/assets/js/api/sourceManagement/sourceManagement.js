@@ -10,11 +10,14 @@ export default {
     methods: {
         getAllList(data, successFunc, failedFunc) {
             let that = this;
-            that.get("/demoproject/test/getAllList", data).then(result => {
-                    successFunc(result);
+            this.$axios.get('/api/supplier/manager/article').then(result => {
+                successFunc(result.data);
             }).catch(err => {
-                failedFunc(err);
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
             });
-        }
+        },
     }
 }

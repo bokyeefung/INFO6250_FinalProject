@@ -13,7 +13,7 @@
                 <el-pagination :current-page.sync="page.current" :page-size="page.size" :total="page.total"
                                layout="total, prev, pager, next, jumper" style="float: right;">
                 </el-pagination>
-            </div class="content-list-function">
+            </div>
             <el-table :data="tableData" :resizable="false" ref="multipleTable" @selection-change="handleSelectionChange"
                       border highlight-current-row class="content-list-table">
                 <el-table-column type="selection" width="36"></el-table-column>
