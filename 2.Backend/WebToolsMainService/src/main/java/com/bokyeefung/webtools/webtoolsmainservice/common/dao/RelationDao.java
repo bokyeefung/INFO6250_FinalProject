@@ -10,6 +10,8 @@ import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.RelationMap
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class RelationDao extends AbstractDao<RelationPo> {
@@ -67,6 +69,15 @@ public class RelationDao extends AbstractDao<RelationPo> {
         } catch (Exception e) {
             log.error("Select relation by uuid failed, uuid is: {}", uuid);
             throw new ServiceException("selectByUuidAndHostGroupId", e);
+        }
+    }
+
+    public List<RelationPo> selectByHostGroupId(String groupId) throws ServiceException {
+        try {
+            return getMapper(RelationMapper.class).selectByHostGroupId(groupId);
+        } catch (Exception e) {
+            log.error("Select relation by groupId failed, groupId is: {}", groupId);
+            throw new ServiceException("Select relation by groupId failed", e);
         }
     }
 }
