@@ -33,6 +33,17 @@ export default {
                 }
                 that.errorMessage('Logout failed.');
             });
+        },
+        checkLogin(uuid, failed) {
+            let that = this;
+            this.$axios.post('/api/supplier/security/check/' + uuid).then(() => {
+            }).catch(err => {
+                if ('function' === typeof failed) {
+                    failed(err.response.data.message);
+                }
+                that.clearUserInfo();
+                that.warningMessage('Please login again.');
+            });
         }
     }
 }

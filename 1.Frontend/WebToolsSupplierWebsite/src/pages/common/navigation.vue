@@ -54,7 +54,15 @@
             }
         },
         mounted() {
+            const that = this;
             this.getNavigation();
+            const timer = setInterval(() => {
+                const user = that.getUserInfo();
+                if (user !== null && user !== undefined && user.uuid !== null && user.uuid !== undefined) {
+                    that.checkLogin(user.uuid);
+                }
+            }, 5000);
+            this.$once('hook:beforeDestroy',()=>clearInterval(timer));
         },
         methods: {
             getNavigation() {
