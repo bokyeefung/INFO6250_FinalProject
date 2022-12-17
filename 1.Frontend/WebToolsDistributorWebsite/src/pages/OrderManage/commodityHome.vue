@@ -3,7 +3,6 @@
         <el-card style="margin-top: 20px;" v-loading="loading">
             <div slot="header">
                 <span>Overview</span>
-                <el-button style="float: right;" size="small" type="primary" @click="toSourceAdd">New Commodity</el-button>
             </div>
             <div class="content-list-function">
                 <el-button type="text" size="mini" :underline="false" @click="getAllListImpl"
@@ -17,18 +16,29 @@
             <el-table :data="tableData" :resizable="false" ref="multipleTable" @selection-change="handleSelectionChange"
                       border highlight-current-row class="content-list-table">
                 <el-table-column type="selection" width="36"></el-table-column>
-                <el-table-column prop="name" label="Commodity Name" min-width="180" fixed sortable></el-table-column>
-                <el-table-column prop="moneyCost" label="Unit Price (USD)" min-width="160" sortable>
+                <el-table-column label="Raw Material Name" min-width="180" fixed sortable>
                     <template slot-scope="scope">
-                        {{formatMoney(scope.row.moneyCost)}}
+                        {{scope.row.srcArticle.name}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="timeCost" label="Production Cycle (Days)" min-width="220" sortable></el-table-column>
-                <el-table-column prop="number" label="Stock" min-width="120" sortable></el-table-column>
-                <el-table-column label="Options" width="180" fixed="right">
+                <el-table-column label="Stock" min-width="120" sortable>
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="updateSourceImpl(scope.row)">Update</el-button>
-                        <el-button type="text" size="small" @click="deleteSourceImpl(scope.row)">Delete</el-button>
+                        {{scope.row.srcArticle.number}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="number" label="Ordered Quantity" min-width="180" sortable>
+                    <template slot-scope="scope">
+                        <font :color="(scope.row.isConfirmed === 0 && scope.row.number > scope.row.srcArticle.number) ? 'red' : 'black'">{{scope.row.number}}</font>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="isConfirmed" label="Stock" min-width="120" sortable>
+                    <template slot-scope="scope">
+                        <el-link :underline="false" :type="scope.row.isConfirmed === 0 ? 'primary' : 'success'">{{ scope.row.isConfirmed === 0 ? "OPENING" : "CLOSED" }}</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Options" width="100" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="confirmSourceImpl(scope.row)" :disabled="scope.row.isConfirmed !== 0">Confirm</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -46,12 +56,12 @@
 </template>
 
 <script>
-    import sourceManagement from "../../assets/js/api/sourceManagement/sourceManagement";
     import {formatDate, formatMoney} from "../../assets/js/common/format";
+    import orderManagement from "../../assets/js/api/orderManagement/orderManagement";
 
     export default {
-        name: 'sourceHome',
-        mixins: [sourceManagement],
+        name: 'orderHome',
+        mixins: [orderManagement],
         data() {
             return {
                 loading: false,
@@ -84,21 +94,15 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            toSourceAdd() {
-                this.$router.push('/source/add');
-            },
-            updateSourceImpl(scopeRow) {
-                this.$router.push(`/source/change/${scopeRow.uuid}`);
-            },
-            deleteSourceImpl(scopeRow) {
+            confirmSourceImpl(scopeRow) {
                 let that = this;
-                this.$confirm(`Delete commodity "${scopeRow.name}"？`, 'Warning', {
+                this.$confirm(`Confirm order "${scopeRow.srcArticle.name}"？`, 'Warning', {
                     confirmButtonText: 'Confirm',
                     cancelButtonText: 'Cancel',
                     type: 'warning'
                 }).then(() => {
-                    that.deleteSource(scopeRow.uuid, function () {
-                        that.successMessage('Delete commodity succeed.');
+                    that.confirmOrder(scopeRow.uuid, function () {
+                        that.successMessage('Order confirmed.');
                         that.getAllListImpl();
                     });
                 }).catch(() => {});

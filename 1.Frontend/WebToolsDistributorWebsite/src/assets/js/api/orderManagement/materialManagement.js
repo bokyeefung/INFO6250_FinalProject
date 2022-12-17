@@ -1,16 +1,15 @@
 import message from "../../common/message";
-import ajax from "../common/ajax";
 
 export default {
-    name: 'sourceManagement',
-    mixins: [message, ajax],
+    name: 'orderManagement',
+    mixins: [message],
     data() {
         return {}
     },
     methods: {
         getAllList(data, successFunc, failedFunc) {
             let that = this;
-            this.$axios.get('/api/distributor/manager/article').then(result => {
+            this.$axios.get('/api/distributor/manager/orders/host').then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -19,9 +18,9 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
-        addSource(data, successFunc, failedFunc) {
+        addHostOrder(data, successFunc, failedFunc) {
             let that = this;
-            this.$axios.post('/api/distributor/manager/article', data).then(result => {
+            this.$axios.post('/api/distributor/manager/orders/host', data).then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -30,9 +29,9 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
-        deleteSource(uuid, successFunc, failedFunc) {
+        deleteHostOrder(uuid, successFunc, failedFunc) {
             let that = this;
-            this.$axios.delete('/api/distributor/manager/article/' + uuid).then(result => {
+            this.$axios.delete('/api/distributor/manager/orders/host/' + uuid).then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -41,9 +40,9 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
-        selectSource(uuid, successFunc, failedFunc) {
+        selectHostOrder(uuid, successFunc, failedFunc) {
             let that = this;
-            this.$axios.get('/api/distributor/manager/article/' + uuid).then(result => {
+            this.$axios.get('/api/distributor/manager/orders/host/' + uuid).then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -52,9 +51,9 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
-        updateSource(data, successFunc, failedFunc) {
+        updateHostOrder(data, successFunc, failedFunc) {
             let that = this;
-            this.$axios.put('/api/distributor/manager/article', data).then(result => {
+            this.$axios.put('/api/distributor/manager/orders/host', data).then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -62,6 +61,6 @@ export default {
                 }
                 that.errorMessage(err.response.data.message);
             });
-        },
+        }
     }
 }

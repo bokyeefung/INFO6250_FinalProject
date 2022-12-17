@@ -3,13 +3,13 @@
 
         <div style="background-color: white; border-bottom: 1px solid #eee;">
             <el-page-header style="padding: 24px; margin: 0 auto;"
-                            @back="goBack" content="Modify Raw Material Order"></el-page-header>
+                            @back="goBack" content="Modify Product Order"></el-page-header>
         </div>
 
 
         <el-card style="margin: 20px;">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" span="11">
-                <el-form-item label="Raw Material Name" prop="relationId">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" span="11">
+                <el-form-item label="Product Name" prop="relationId">
                     <el-input v-model="ruleForm.productName" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="Ordered Quantity" prop="number">
@@ -85,7 +85,7 @@ export default {
         },
         goBack() {
             let that = this;
-            that.$router.push('/order/material');
+            that.$router.push('/order/product');
         }
     }
 }

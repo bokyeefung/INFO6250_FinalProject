@@ -24,8 +24,24 @@ export default new Router({
           component: () => import('@/pages/sourceManage/sourceAdd')
         },
         {
-          path: '/source/change/:id',
+          path: '/source/change/:uuid',
           component: () => import('@/pages/sourceManage/sourceChange')
+        },
+        {
+          path: '/order/product',
+          component: () => import('@/pages/orderManage/productHome')
+        },
+        {
+          path: '/order/product/add',
+          component: () => import('@/pages/orderManage/productAdd')
+        },
+        {
+          path: '/order/product/:uuid',
+          component: () => import('@/pages/orderManage/productChange')
+        },
+        {
+          path: '/order/commodity',
+          component: () => import('@/pages/orderManage/commodityHome')
         },
         {
           path: '/user',

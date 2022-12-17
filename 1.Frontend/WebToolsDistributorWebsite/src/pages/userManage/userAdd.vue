@@ -24,8 +24,7 @@
                     <el-input v-model="ruleForm.address"></el-input>
                 </el-form-item>
                 <el-form-item label="Role" prop="role">
-                    <el-select v-model="ruleForm.role" placeholder="Role">
-                        <el-option label="Plant Manager" :value="2"></el-option>
+                    <el-select v-model="ruleForm.role" placeholder="Role" disabled>
                         <el-option label="Manager" :value="3"></el-option>
                     </el-select>
                 </el-form-item>
@@ -59,7 +58,7 @@ export default {
                 email: "",
                 phone: "",
                 address: "",
-                role: 2
+                role: 3
             },
             rules: {
                 name: [
