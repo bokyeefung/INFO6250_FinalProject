@@ -29,12 +29,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @Slf4j
 @RestController("supplierManagerController")
 @RequestMapping("/supplier/manager")
 public class ManagerController {
+    public static final String UUID_KEY = "uuid";
+    public static final String MONEY_COST_KEY = "moneyCost";
+    public static final String TIME_COST_KEY = "timeCost";
+    public static final String NUMBER_KEY = "number";
+
     @Autowired
     private UserSecurityCache userSecurityCache;
 
@@ -89,8 +95,26 @@ public class ManagerController {
         return managerService.selectArticleByUuid(uuid, userPo.getGroupId());
     }
 
-    public ArticlePo updateArticleCost() throws ServiceException {
-        return null;
+    @PutMapping("/article")
+    @ResponseBody
+    public ArticlePo updateArticle(@NonNull @RequestBody Map<String, Object> articlePo) throws ServiceException {
+        ParamCheckUtil.checkParam(articlePo.get(UUID_KEY), UUID_KEY, uuid -> StringUtils.isNotEmpty((String) uuid));
+        Predicate<Object> nonNegativeChecker = number -> number != null && (Integer) number >= 0;
+        if (articlePo.containsKey(MONEY_COST_KEY)) {
+            ParamCheckUtil.checkParam(articlePo.get(MONEY_COST_KEY), MONEY_COST_KEY, nonNegativeChecker);
+        }
+        if (articlePo.containsKey(TIME_COST_KEY)) {
+            ParamCheckUtil.checkParam(articlePo.get(TIME_COST_KEY), TIME_COST_KEY, nonNegativeChecker);
+        }
+        if (articlePo.containsKey(NUMBER_KEY)) {
+            ParamCheckUtil.checkParam(articlePo.get(NUMBER_KEY), NUMBER_KEY, nonNegativeChecker);
+        }
+        UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        articlePo.put("groupId", userPo.getGroupId());
+        return managerService.updateArticleCost(articlePo);
     }
 
     @GetMapping("/orders")

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service("SupplierManagerServiceImpl")
@@ -48,8 +49,9 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ArticlePo updateArticleCost() throws ServiceException {
-        return null;
+    public ArticlePo updateArticleCost(Map<String, Object> articlePo) throws ServiceException {
+        articleDao.updateCost(articlePo);
+        return articleDao.selectByUuidAndGroupId((String) articlePo.get("uuid"), (String) articlePo.get("groupId"));
     }
 
     @Override

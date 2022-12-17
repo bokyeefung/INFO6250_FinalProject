@@ -109,6 +109,23 @@
         </set>
         where UUID = #{uuid,jdbcType=VARCHAR}
     </update>
+
+    <update id="updateCost" parameterType="java.util.Map">
+        update tbl_article
+        <set>
+            <if test="article.moneyCost != null">
+                MONEY_COST = #{article.moneyCost,jdbcType=INTEGER},
+            </if>
+            <if test="article.timeCost != null">
+                TIME_COST = #{article.timeCost,jdbcType=INTEGER},
+            </if>
+            <if test="article.number != null">
+                `NUMBER` = #{article.number,jdbcType=INTEGER},
+            </if>
+        </set>
+        where UUID = #{article.uuid,jdbcType=VARCHAR} and GROUP_ID = #{article.groupId,jdbcType=VARCHAR}
+    </update>
+
     <update id="updateByPrimaryKey" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo">
         update tbl_article
         set GROUP_ID   = #{groupId,jdbcType=VARCHAR},

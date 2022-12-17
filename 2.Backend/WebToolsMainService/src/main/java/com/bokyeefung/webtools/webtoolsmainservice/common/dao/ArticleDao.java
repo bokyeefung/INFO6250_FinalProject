@@ -6,11 +6,13 @@ package com.bokyeefung.webtools.webtoolsmainservice.common.dao;
 
 import com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
+import com.bokyeefung.webtools.cbb.util.json.JsonUtil;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.mapper.ArticleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -87,6 +89,18 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
         } catch (Exception e) {
             log.error("Update article by uuid failed, uuid is: {}", record.getUuid());
             throw new ServiceException(e);
+        }
+    }
+
+    public int updateCost(Map<String, Object> record) throws ServiceException {
+        if (record == null) {
+            return 0;
+        }
+        try {
+            return getMapper(ArticleMapper.class).updateCost(record);
+        } catch (Exception e) {
+            log.error("Update article by uuid failed, record is: {}", JsonUtil.toJson(record));
+            throw new ServiceException("Update article by uuid failed", e);
         }
     }
 }
