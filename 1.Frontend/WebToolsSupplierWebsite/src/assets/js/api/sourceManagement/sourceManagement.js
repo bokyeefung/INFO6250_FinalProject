@@ -30,5 +30,16 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
+        deleteSource(uuid, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.delete('/api/supplier/manager/article/' + uuid).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        }
     }
 }

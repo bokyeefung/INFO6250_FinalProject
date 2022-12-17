@@ -91,7 +91,17 @@
                 // TODO: 添加并跳转到详情展示页面
             },
             deleteSourceImpl(scopeRow) {
-                // TODO: 添加并跳转到详情展示页面
+                let that = this;
+                this.$confirm(`Delete raw material "${scopeRow.name}"？`, 'Warning', {
+                    confirmButtonText: 'Confirm',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(() => {
+                    that.deleteSource(scopeRow.uuid, function () {
+                        that.successMessage('Delete user succeed.');
+                        that.getAllListImpl();
+                    });
+                }).catch(() => {});
             },
             toSourceChange(scopeRow) {
                 let id = scopeRow.id;
