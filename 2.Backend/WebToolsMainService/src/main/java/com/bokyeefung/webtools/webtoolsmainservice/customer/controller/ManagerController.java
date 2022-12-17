@@ -126,6 +126,7 @@ public class ManagerController {
         if (userPo == null) {
             throw new UserNotLoginException();
         }
+        orderPo.setUserId(userPo.getUuid());
         return managerService.createHostOrder(orderPo, userPo.getGroupId());
     }
 
@@ -137,7 +138,7 @@ public class ManagerController {
         if (userPo == null) {
             throw new UserNotLoginException();
         }
-        managerService.deleteHostOrder(uuid, userPo.getGroupId());
+        managerService.deleteHostOrder(uuid, userPo.getUuid());
     }
 
     @GetMapping("/orders/host")
@@ -147,7 +148,7 @@ public class ManagerController {
         if (userPo == null) {
             throw new UserNotLoginException();
         }
-        return managerService.queryHostOrderList(userPo.getGroupId());
+        return managerService.queryHostOrderList(userPo.getUuid());
     }
 
     @GetMapping("/orders/host/{uuid}")
@@ -157,7 +158,7 @@ public class ManagerController {
         if (userPo == null) {
             throw new UserNotLoginException();
         }
-        return managerService.queryHostOrder(uuid, userPo.getGroupId());
+        return managerService.queryHostOrder(uuid, userPo.getUuid());
     }
 
     @PutMapping("/orders/host")
@@ -169,7 +170,7 @@ public class ManagerController {
         if (userPo == null) {
             throw new UserNotLoginException();
         }
-        managerService.updateHostOrderNumber(orderPo, userPo.getGroupId());
+        managerService.updateHostOrderNumber(orderPo, userPo.getUuid());
     }
 
     @GetMapping("/orders")

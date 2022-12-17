@@ -44,6 +44,12 @@ public class OrderPo {
     @JsonProperty("isConfirmed")
     private int isConfirmed;
 
+    /**
+     * 创建订单的用户Id
+     */
+    @JsonProperty("userId")
+    private String userId;
+
     @JsonProperty("srcArticle")
     private ArticlePo srcArticle;
     @JsonProperty("dstArticle")

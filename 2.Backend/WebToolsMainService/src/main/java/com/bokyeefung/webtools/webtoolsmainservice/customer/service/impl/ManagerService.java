@@ -19,10 +19,10 @@ public interface ManagerService {
     ArticlePo updateArticleCost(Map<String, Object> articlePo) throws ServiceException;
 
     OrderPo createHostOrder(OrderPo orderPo, String groupId) throws ServiceException;
-    void deleteHostOrder(String uuid, String groupId) throws ServiceException;
-    List<OrderPo> queryHostOrderList(String groupId) throws ServiceException;
-    OrderPo queryHostOrder(String uuid, String groupId) throws ServiceException;
-    void updateHostOrderNumber(OrderPo orderPo, String groupId) throws ServiceException;
+    void deleteHostOrder(String uuid, String userId) throws ServiceException;
+    List<OrderPo> queryHostOrderList(String userId) throws ServiceException;
+    OrderPo queryHostOrder(String uuid, String userId) throws ServiceException;
+    void updateHostOrderNumber(OrderPo orderPo, String userId) throws ServiceException;
 
     List<OrderPo> queryOrderList(String groupId) throws ServiceException;
     void confirmOrder(String uuid, String groupId) throws ServiceException;

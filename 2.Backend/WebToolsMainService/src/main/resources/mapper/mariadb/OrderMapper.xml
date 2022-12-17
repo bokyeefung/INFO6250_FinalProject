@@ -6,10 +6,11 @@
         <result column="RELATION_ID" jdbcType="VARCHAR" property="relationId"/>
         <result column="NUMBER" jdbcType="INTEGER" property="number"/>
         <result column="IS_CONFIRMED" jdbcType="INTEGER" property="isConfirmed"/>
+        <result column="USER_ID" jdbcType="VARCHAR" property="userId"/>
     </resultMap>
     <sql id="Base_Column_List">
         UUID
-        , RELATION_ID, `NUMBER`, IS_CONFIRMED
+        , RELATION_ID, `NUMBER`, IS_CONFIRMED, USER_ID
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -23,8 +24,9 @@
         where UUID = #{uuid,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo">
-        insert into tbl_order (UUID, RELATION_ID, `NUMBER`, IS_CONFIRMED)
-        values (#{uuid,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{isConfirmed,jdbcType=INTEGER})
+        insert into tbl_order (UUID, RELATION_ID, `NUMBER`, IS_CONFIRMED, USER_ID)
+        values (#{uuid,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER},
+                #{isConfirmed,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo">
         <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
@@ -119,6 +121,14 @@
         ORDER BY O.IS_CONFIRMED ASC
     </select>
 
+    <select id="selectByHostUserId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = O.RELATION_ID
+        WHERE O.USER_ID = #{userId,jdbcType=VARCHAR}
+        ORDER BY O.IS_CONFIRMED ASC
+    </select>
+
     <select id="selectByGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
         SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
         O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
@@ -136,6 +146,13 @@
         LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
         LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
         WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND AD.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUuidAndHostUserId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = O.RELATION_ID
+        WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND O.USER_ID = #{userId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectByUuidAndGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
@@ -165,5 +182,11 @@
                                   LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
                 WHERE AD.GROUP_ID = #{groupId,jdbcType=VARCHAR} AND O.UUID = #{orderPo.uuid,jdbcType=VARCHAR} AND R.UUID = O.RELATION_ID
             )
+    </update>
+
+    <update id="updateNumberByHostUserId">
+        UPDATE TBL_ORDER O
+        SET O.NUMBER = #{orderPo.number,jdbcType=INTEGER}
+        WHERE O.UUID = #{orderPo.uuid,jdbcType=VARCHAR} AND O.USER_ID = #{userId,jdbcType=VARCHAR}
     </update>
 </mapper>

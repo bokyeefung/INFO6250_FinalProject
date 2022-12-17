@@ -72,6 +72,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
         }
     }
 
+    public List<OrderPo> selectByHostUserId(String userId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByHostUserId(userId);
+        } catch (Exception e) {
+            log.error("Select order by host userId failed, uuid is: {}", userId);
+            throw new ServiceException("Select order by host userId failed", e);
+        }
+    }
+
     public List<OrderPo> selectByGroupId(String groupId) throws ServiceException {
         try {
             return getMapper(OrderMapper.class).selectByGroupId(groupId);
@@ -87,6 +96,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
         } catch (Exception e) {
             log.error("Select order by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
             throw new ServiceException("Select order by groupId failed", e);
+        }
+    }
+
+    public OrderPo selectByUuidAndHostUserId(String uuid, String userId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByUuidAndHostUserId(uuid, userId);
+        } catch (Exception e) {
+            log.error("Select order by uuid and userId failed, uuid is: {}, userId is: {}", uuid, userId);
+            throw new ServiceException("Select order by userId failed", e);
         }
     }
 
@@ -111,6 +129,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
     public void updateNumberByHostGroupId(OrderPo orderPo, String groupId) throws ServiceException {
         try {
             getMapper(OrderMapper.class).updateNumberByHostGroupId(orderPo, groupId);
+        } catch (Exception e) {
+            log.error("Update order by uuid failed, uuid is: {}", orderPo.getUuid());
+            throw new ServiceException("Update order by uuid failed", e);
+        }
+    }
+
+    public void updateNumberByHostUserId(OrderPo orderPo, String userId) throws ServiceException {
+        try {
+            getMapper(OrderMapper.class).updateNumberByHostUserId(orderPo, userId);
         } catch (Exception e) {
             log.error("Update order by uuid failed, uuid is: {}", orderPo.getUuid());
             throw new ServiceException("Update order by uuid failed", e);
