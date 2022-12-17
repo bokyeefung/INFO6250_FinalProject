@@ -6,12 +6,14 @@ package com.bokyeefung.webtools.webtoolsmainservice.customer.controller;
 
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
+import com.bokyeefung.webtools.cbb.util.check.ParamCheckUtil;
 import com.bokyeefung.webtools.webtoolsmainservice.customer.service.impl.LoginService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,12 @@ public class LoginController {
     @PostMapping("/logout")
     public void logout() throws ServiceException {
         loginService.logout();
+    }
+
+    @PostMapping("/check/{uuid}")
+    @ResponseBody
+    public void checkLogin(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
+        ParamCheckUtil.checkParam(uuid, "uuid", StringUtils::isNotEmpty);
+        loginService.checkLogin(uuid);
     }
 }

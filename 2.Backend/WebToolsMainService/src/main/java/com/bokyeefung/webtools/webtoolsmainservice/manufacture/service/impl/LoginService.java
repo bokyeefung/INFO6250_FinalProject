@@ -10,4 +10,6 @@ import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 public interface LoginService {
     UserPo login(UserPo userPo) throws ServiceException;
     void logout() throws ServiceException;
+    void checkLogin(String uuid) throws ServiceException;
+
 }
