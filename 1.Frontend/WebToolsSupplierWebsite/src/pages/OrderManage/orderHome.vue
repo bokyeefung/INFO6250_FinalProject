@@ -31,7 +31,7 @@
                         <font :color="(scope.row.isConfirmed === 0 && scope.row.number > scope.row.srcArticle.number) ? 'red' : 'black'">{{scope.row.number}}</font>
                     </template>
                 </el-table-column>
-                <el-table-column prop="isConfirmed" label="Stock" min-width="120" sortable>
+                <el-table-column prop="isConfirmed" label="Status" min-width="120" sortable>
                     <template slot-scope="scope">
                         <el-link :underline="false" :type="scope.row.isConfirmed === 0 ? 'primary' : 'success'">{{ scope.row.isConfirmed === 0 ? "OPENING" : "CLOSED" }}</el-link>
                     </template>

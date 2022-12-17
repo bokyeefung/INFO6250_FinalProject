@@ -13,7 +13,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="loginFunction">SIGN IN</el-button>
-                    <el-button type="primary" disabled>SIGN UP</el-button>
+                    <el-button type="primary" @click="gotoSignUp">SIGN UP</el-button>
                     <el-button @click="goBack">RETURN</el-button>
                     <el-link type="primary" :underline="false" style="float: right;">Forgot your password?</el-link>
                 </el-form-item>
@@ -50,6 +50,9 @@ export default {
         }
     },
     methods: {
+        gotoSignUp() {
+            this.$router.push({path: '/signup'});
+        },
         loginFunction() {
             const that = this;
             let data = {

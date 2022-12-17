@@ -16,7 +16,7 @@
             <el-table :data="tableData" :resizable="false" ref="multipleTable" @selection-change="handleSelectionChange"
                       border highlight-current-row class="content-list-table">
                 <el-table-column type="selection" width="36"></el-table-column>
-                <el-table-column label="Raw Material Name" min-width="180" fixed sortable>
+                <el-table-column label="Product Name" min-width="180" fixed sortable>
                     <template slot-scope="scope">
                         {{scope.row.srcArticle.name}}
                     </template>
@@ -31,7 +31,7 @@
                         <font :color="(scope.row.isConfirmed === 0 && scope.row.number > scope.row.srcArticle.number) ? 'red' : 'black'">{{scope.row.number}}</font>
                     </template>
                 </el-table-column>
-                <el-table-column prop="isConfirmed" label="Stock" min-width="120" sortable>
+                <el-table-column prop="isConfirmed" label="Status" min-width="120" sortable>
                     <template slot-scope="scope">
                         <el-link :underline="false" :type="scope.row.isConfirmed === 0 ? 'primary' : 'success'">{{ scope.row.isConfirmed === 0 ? "OPENING" : "CLOSED" }}</el-link>
                     </template>

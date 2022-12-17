@@ -17,7 +17,7 @@ export default {
             if (this.user === null) {
                 this.user = JSON.parse(localStorage.getItem('userInfo'));
 
-                if (this.user === null && this.$route.path !== "/login") {
+                if (this.user === null && this.$route.path !== "/login" && this.$route.path !== "/signup") {
                     this.$router.push('/login?from=' + this.$route.path);
                 }
             }

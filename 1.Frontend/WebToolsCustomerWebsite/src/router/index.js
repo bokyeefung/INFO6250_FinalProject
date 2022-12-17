@@ -44,6 +44,10 @@ export default new Router({
     {
       path: '/login',
       component: () => import('@/pages/common/login')
+    },
+    {
+      path: '/signup',
+      component: () => import('@/pages/common/signUp')
     }
   ]
 })
