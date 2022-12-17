@@ -5,10 +5,11 @@
         <id column="UUID" jdbcType="VARCHAR" property="uuid"/>
         <result column="SOURCE_ID" jdbcType="VARCHAR" property="sourceId"/>
         <result column="DESTINATION_ID" jdbcType="VARCHAR" property="destinationId"/>
+        <result column="NUMBER" jdbcType="INTEGER" property="number"/>
     </resultMap>
     <sql id="Base_Column_List">
         UUID
-        , SOURCE_ID, DESTINATION_ID
+        , SOURCE_ID, DESTINATION_ID, `NUMBER`
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

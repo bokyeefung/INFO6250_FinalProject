@@ -116,11 +116,21 @@
 
     <select id="selectByGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
         SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
-            O.IS_CONFIRMED FROM TBL_ORDER O
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
         LEFT JOIN TBL_RELATION R ON R.UUID = O.RELATION_ID
         LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
         LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
         WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+        ORDER BY O.IS_CONFIRMED ASC
+    </select>
+
+    <select id="selectByUuidAndGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_RELATION R ON R.UUID = O.RELATION_ID
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
+        LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+        WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
     </select>
 
     <update id="confirmOrder" parameterType="java.lang.String">

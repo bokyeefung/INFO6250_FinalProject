@@ -12,5 +12,6 @@ import java.util.List;
 
 public interface OrderMapper extends AbstractMapper<OrderPo> {
     List<OrderPo> selectByGroupId(@Param("groupId") String groupId);
+    OrderPo selectByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
     void confirmOrder(@Param("uuid") String uuid, @Param("groupId") String groupId);
 }

@@ -37,4 +37,7 @@ public class RelationPo {
      */
     @JsonProperty("destinationId")
     private String destinationId;
+
+    @JsonProperty("number")
+    private int number;
 }

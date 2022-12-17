@@ -72,6 +72,15 @@ public class OrderDao extends AbstractDao<OrderPo> {
         }
     }
 
+    public OrderPo selectByUuidAndGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByUuidAndGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Select order by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
+            throw new ServiceException("Select order by groupId failed", e);
+        }
+    }
+
     public void confirmOrder(String uuid, String groupId) throws ServiceException {
         try {
             getMapper(OrderMapper.class).confirmOrder(uuid, groupId);
