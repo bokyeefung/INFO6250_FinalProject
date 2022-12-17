@@ -110,7 +110,7 @@
             },
             deleteSourceImpl(scopeRow) {
                 let that = this;
-                this.$confirm(`Delete order "${scopeRow.srcArticle.name} * ${scopeRow.srcArticle.number}" ？`, 'Warning', {
+                this.$confirm(`Delete order "${scopeRow.srcArticle.name} * ${scopeRow.number}" ？`, 'Warning', {
                     confirmButtonText: 'Confirm',
                     cancelButtonText: 'Cancel',
                     type: 'warning'

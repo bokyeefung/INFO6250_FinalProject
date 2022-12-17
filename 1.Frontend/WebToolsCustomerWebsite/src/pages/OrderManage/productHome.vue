@@ -27,16 +27,6 @@
                         <font :color="(scope.row.isConfirmed === 0 && scope.row.number > scope.row.srcArticle.number) ? 'red' : 'black'">{{scope.row.number}}</font>
                     </template>
                 </el-table-column>
-                <el-table-column label="Commodity Name" min-width="180" sortable>
-                    <template slot-scope="scope">
-                        {{scope.row.dstArticle.name}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="Commodity Stock" min-width="160" sortable>
-                    <template slot-scope="scope">
-                        {{scope.row.dstArticle.number}}
-                    </template>
-                </el-table-column>
                 <el-table-column prop="isConfirmed" label="Status" min-width="120" sortable>
                     <template slot-scope="scope">
                         <el-link :underline="false" :type="scope.row.isConfirmed === 0 ? 'primary' : 'success'">{{ scope.row.isConfirmed === 0 ? "OPENING" : "CLOSED" }}</el-link>
@@ -106,11 +96,11 @@
             },
             updateSourceImpl(scopeRow) {
                 let id = scopeRow.uuid;
-                this.$router.push('/order/product/' + id);
+                this.$router.push('/order/product/change/' + id);
             },
             deleteSourceImpl(scopeRow) {
                 let that = this;
-                this.$confirm(`Delete order "${scopeRow.srcArticle.name} * ${scopeRow.srcArticle.number}" ？`, 'Warning', {
+                this.$confirm(`Delete order "${scopeRow.srcArticle.name} * ${scopeRow.number}" ？`, 'Warning', {
                     confirmButtonText: 'Confirm',
                     cancelButtonText: 'Cancel',
                     type: 'warning'

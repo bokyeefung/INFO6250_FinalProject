@@ -58,7 +58,7 @@ export default {
         const that = this;
         this.selectHostOrder(this.$route.params.uuid, (data) => {
             that.ruleForm = data;
-            that.ruleForm.productName = `${data.srcArticle.name} => ${data.dstArticle.name}`;
+            that.ruleForm.productName = `${data.srcArticle.name}`;
         });
     },
     methods: {

@@ -39,16 +39,6 @@
                         {{scope.row.srcArticle.number}}
                     </template>
                 </el-table-column>
-                <el-table-column label="Commodity Name" min-width="180" sortable>
-                    <template slot-scope="scope">
-                        {{scope.row.dstArticle.name}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="Commodity Stock" min-width="160" sortable>
-                    <template slot-scope="scope">
-                        {{scope.row.dstArticle.number}}
-                    </template>
-                </el-table-column>
                 <el-table-column label="Consumption" min-width="150" sortable>
                     <template slot-scope="scope">
                         {{scope.row.number}}
@@ -106,7 +96,7 @@ export default {
         },
         selectCurrentRelation(scopeRow) {
             this.ruleForm.relationId = scopeRow.uuid;
-            this.ruleForm.productName = `${scopeRow.srcArticle.name} => ${scopeRow.dstArticle.name}`;
+            this.ruleForm.productName = scopeRow.srcArticle.name;
             this.dialog.dialogTableVisible = false;
         },
         submitForm() {
