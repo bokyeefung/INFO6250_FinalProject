@@ -19,5 +19,16 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
+        addSource(data, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.post('/api/supplier/manager/article', data).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        },
     }
 }
