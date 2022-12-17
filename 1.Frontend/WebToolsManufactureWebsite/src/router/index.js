@@ -28,6 +28,10 @@ export default new Router({
           component: () => import('@/pages/sourceManage/sourceChange')
         },
         {
+          path: '/order/product',
+          component: () => import('@/pages/orderManage/orderHome')
+        },
+        {
           path: '/user',
           component: () => import('@/pages/userManage/userHome')
         },
