@@ -28,6 +28,18 @@ export default new Router({
           component: () => import('@/pages/sourceManage/sourceChange')
         },
         {
+          path: '/order/material',
+          component: () => import('@/pages/orderManage/materialHome')
+        },
+        {
+          path: '/order/material/add',
+          component: () => import('@/pages/orderManage/materialAdd')
+        },
+        {
+          path: '/order/material/:uuid',
+          component: () => import('@/pages/orderManage/materialChange')
+        },
+        {
           path: '/order/product',
           component: () => import('@/pages/orderManage/orderHome')
         },

@@ -1,0 +1,144 @@
+<template>
+    <div id="source-home-container" class="source-home-container">
+        <el-card style="margin-top: 20px;" v-loading="loading">
+            <div slot="header">
+                <span>Overview</span>
+                <el-button style="float: right;" size="small" type="primary" @click="toOrderAdd">Order Raw Material</el-button>
+            </div>
+            <div class="content-list-function">
+                <el-button type="text" size="mini" :underline="false" @click="getAllListImpl"
+                           style="font-size: 13px; margin-right: 10px;">
+                    Refresh<i class="el-icon-refresh el-icon--right"></i>
+                </el-button>
+                <el-pagination :current-page.sync="page.current" :page-size="page.size" :total="page.total"
+                               layout="total, prev, pager, next, jumper" style="float: right;">
+                </el-pagination>
+            </div>
+            <el-table :data="tableData" :resizable="false" ref="multipleTable" @selection-change="handleSelectionChange"
+                      border highlight-current-row class="content-list-table">
+                <el-table-column type="selection" width="36"></el-table-column>
+                <el-table-column label="Raw Material Name" min-width="180" fixed sortable>
+                    <template slot-scope="scope">
+                        {{scope.row.srcArticle.name}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="number" label="Ordered Quantity" min-width="180" sortable>
+                    <template slot-scope="scope">
+                        <font :color="(scope.row.isConfirmed === 0 && scope.row.number > scope.row.srcArticle.number) ? 'red' : 'black'">{{scope.row.number}}</font>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Product Name" min-width="180" sortable>
+                    <template slot-scope="scope">
+                        {{scope.row.dstArticle.name}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="Product Stock" min-width="150" sortable>
+                    <template slot-scope="scope">
+                        {{scope.row.dstArticle.number}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="isConfirmed" label="Stock" min-width="120" sortable>
+                    <template slot-scope="scope">
+                        <el-link :underline="false" :type="scope.row.isConfirmed === 0 ? 'primary' : 'success'">{{ scope.row.isConfirmed === 0 ? "OPENING" : "CLOSED" }}</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Options" width="180" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="updateSourceImpl(scope.row)" :disabled="scope.row.isConfirmed !== 0">Update</el-button>
+                        <el-button type="text" size="small" @click="deleteSourceImpl(scope.row)" :disabled="scope.row.isConfirmed !== 0">Delete</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="content-list-function">
+                <el-button type="text" size="mini" :underline="false" @click="getAllListImpl"
+                           style="font-size: 13px; margin-right: 10px;">
+                    Refresh<i class="el-icon-refresh el-icon--right"></i>
+                </el-button>
+                <el-pagination :current-page.sync="page.current" :page-size="page.size" :total="page.total"
+                               layout="total, prev, pager, next, jumper" style="float: right;">
+                </el-pagination>
+            </div>
+        </el-card>
+    </div>
+</template>
+
+<script>
+    import {formatDate, formatMoney} from "../../assets/js/common/format";
+    import materialManagement from "../../assets/js/api/orderManagement/materialManagement";
+
+    export default {
+        name: 'orderHome',
+        mixins: [materialManagement],
+        data() {
+            return {
+                loading: false,
+                multipleSelection: [],
+                page: {
+                    current: 1,
+                    size: 20,
+                    total: 20
+                },
+                scope: "",
+                tableData: []
+            }
+        },
+        mounted() {
+            this.getAllListImpl();
+        },
+        methods: {
+            formatDate,
+            formatMoney,
+            getAllListImpl() {
+                let that = this;
+                that.loading = true;
+                let data = {};
+                that.getAllList(data, result => {
+                    that.tableData = result;
+                    that.page.total = result.length;
+                    that.loading = false;
+                }, () => { that.loading = false; });
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            toOrderAdd() {
+                this.$router.push('/order/material/add');
+            },
+            updateSourceImpl(scopeRow) {
+                let id = scopeRow.uuid;
+                this.$router.push('/order/material/' + id);
+            },
+            deleteSourceImpl(scopeRow) {
+                let that = this;
+                this.$confirm(`Delete order "${scopeRow.srcArticle.name} * ${scopeRow.srcArticle.number}" ？`, 'Warning', {
+                    confirmButtonText: 'Confirm',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(() => {
+                    that.deleteHostOrder(scopeRow.uuid, function () {
+                        that.successMessage('Order deleted.');
+                        that.getAllListImpl();
+                    });
+                }).catch(() => {});
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+
+    .source-home-container {
+        margin: 20px;
+
+        .content-list-function {
+            height: 32px;
+        }
+
+        .content-list-table {
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+
+</style>
+
