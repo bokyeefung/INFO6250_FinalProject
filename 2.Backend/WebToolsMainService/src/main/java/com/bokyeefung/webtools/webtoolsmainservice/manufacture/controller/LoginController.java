@@ -6,7 +6,7 @@ package com.bokyeefung.webtools.webtoolsmainservice.manufacture.controller;
 
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
-import com.bokyeefung.webtools.webtoolsmainservice.supplier.service.impl.LoginService;
+import com.bokyeefung.webtools.webtoolsmainservice.manufacture.service.impl.LoginService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

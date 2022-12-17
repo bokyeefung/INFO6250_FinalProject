@@ -8,7 +8,7 @@ import com.bokyeefung.webtools.cbb.model.constants.UserEntity;
 import com.bokyeefung.webtools.cbb.model.dao.entity.UserPo;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.UserDao;
-import com.bokyeefung.webtools.webtoolsmainservice.supplier.service.impl.LoginService;
+import com.bokyeefung.webtools.webtoolsmainservice.manufacture.service.impl.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
