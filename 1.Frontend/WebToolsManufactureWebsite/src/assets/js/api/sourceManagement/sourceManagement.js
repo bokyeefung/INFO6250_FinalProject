@@ -10,11 +10,58 @@ export default {
     methods: {
         getAllList(data, successFunc, failedFunc) {
             let that = this;
-            that.get("/demoproject/test/getAllList", data).then(result => {
-                    successFunc(result);
+            this.$axios.get('/api/manufacture/manager/article').then(result => {
+                successFunc(result.data);
             }).catch(err => {
-                failedFunc(err);
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
             });
-        }
+        },
+        addSource(data, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.post('/api/manufacture/manager/article', data).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        },
+        deleteSource(uuid, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.delete('/api/manufacture/manager/article/' + uuid).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        },
+        selectSource(uuid, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.get('/api/manufacture/manager/article/' + uuid).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        },
+        updateSource(data, successFunc, failedFunc) {
+            let that = this;
+            this.$axios.put('/api/manufacture/manager/article', data).then(result => {
+                successFunc(result.data);
+            }).catch(err => {
+                if ('function' === typeof failedFunc) {
+                    failedFunc(err.response.data.message);
+                }
+                that.errorMessage(err.response.data.message);
+            });
+        },
     }
 }

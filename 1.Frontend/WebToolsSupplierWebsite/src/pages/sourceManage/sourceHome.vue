@@ -98,7 +98,7 @@
                     type: 'warning'
                 }).then(() => {
                     that.deleteSource(scopeRow.uuid, function () {
-                        that.successMessage('Delete user succeed.');
+                        that.successMessage('Delete raw material succeed.');
                         that.getAllListImpl();
                     });
                 }).catch(() => {});

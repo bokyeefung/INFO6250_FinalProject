@@ -70,7 +70,9 @@
                     { name: 'Home', icon: 'el-icon-s-home', href: '/'},
                     { name: 'User Management', icon: 'el-icon-s-order', href: '/user', role: [1] },
                     { name: 'Supply Chain Management', icon: 'el-icon-s-order', href: '/supply', role: [2] },
-                    { name: 'Raw Material Management', icon: 'el-icon-s-order', href: '/source', role: [3] }
+                    { name: 'Product Management', icon: 'el-icon-s-order', href: '/source', role: [2] },
+                    { name: 'Raw Material Order Management', icon: 'el-icon-s-order', href: '/order/material', role: [3] },
+                    { name: 'Product Order Management', icon: 'el-icon-s-order', href: '/order/product', role: [3] }
                 ];
                 const currentNavigation = [];
                 baseNavigation.forEach(item => {
