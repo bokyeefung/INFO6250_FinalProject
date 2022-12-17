@@ -6,11 +6,13 @@ package com.bokyeefung.webtools.webtoolsmainservice.manufacture.service;
 
 import com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo;
 import com.bokyeefung.webtools.cbb.model.dao.entity.RelationPo;
+import com.bokyeefung.webtools.cbb.model.exception.PermissionDeniedException;
 import com.bokyeefung.webtools.cbb.model.exception.ServiceException;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.ArticleDao;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.OrderDao;
 import com.bokyeefung.webtools.webtoolsmainservice.common.dao.RelationDao;
 import com.bokyeefung.webtools.webtoolsmainservice.manufacture.service.impl.ManagerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+@Slf4j
 @Service("manufactureManagerServiceImpl")
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
@@ -29,6 +33,39 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Autowired
     private ArticleDao articleDao;
+
+    @Override
+    @Transactional
+    public OrderPo createHostOrder(OrderPo orderPo, String groupId) throws ServiceException {
+        RelationPo relationPo = relationDao.selectByUuidAndHostGroupId(orderPo.getRelationId(), groupId);
+        if (relationPo == null) {
+            throw new PermissionDeniedException("relation uuid illegal");
+        }
+        String uuid = UUID.randomUUID().toString();
+        orderPo.setUuid(uuid);
+        orderPo.setIsConfirmed(0);
+        orderDao.insert(orderPo);
+        return orderDao.selectByPrimaryKey(uuid);
+    }
+
+    @Override
+    public void deleteHostOrder(String uuid, String groupId) throws ServiceException {
+        OrderPo orderPo = orderDao.selectByUuidAndHostGroupId(uuid, groupId);
+        if (orderPo == null) {
+            log.warn("Delete order, order {} not found", uuid);
+            return;
+        }
+        RelationPo relationPo = relationDao.selectByUuidAndHostGroupId(orderPo.getRelationId(), groupId);
+        if (relationPo == null) {
+            throw new PermissionDeniedException("relation uuid illegal");
+        }
+        orderDao.deleteByPrimaryKey(uuid);
+    }
+
+    @Override
+    public List<OrderPo> queryHostOrderList(String groupId) throws ServiceException {
+        return orderDao.selectByHostGroupId(groupId);
+    }
 
     @Override
     public List<OrderPo> queryOrderList(String groupId) throws ServiceException {

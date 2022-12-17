@@ -69,4 +69,14 @@
             DESTINATION_ID = #{destinationId,jdbcType=VARCHAR}
         where UUID = #{uuid,jdbcType=VARCHAR}
     </update>
+
+    <sql id="JOIN_Base_Column_List">
+        R.UUID, R.SOURCE_ID, R.DESTINATION_ID, R.`NUMBER`
+    </sql>
+
+    <select id="selectByUuidAndHostGroupId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="JOIN_Base_Column_List"/> FROM TBL_RELATION R
+        LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+        WHERE R.UUID = #{uuid,jdbcType=VARCHAR} AND AD.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </select>
 </mapper>

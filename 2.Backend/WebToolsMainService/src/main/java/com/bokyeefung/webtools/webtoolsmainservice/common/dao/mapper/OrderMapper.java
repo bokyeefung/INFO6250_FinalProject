@@ -11,7 +11,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderMapper extends AbstractMapper<OrderPo> {
+    List<OrderPo> selectByHostGroupId(@Param("groupId") String groupId);
     List<OrderPo> selectByGroupId(@Param("groupId") String groupId);
+    OrderPo selectByUuidAndHostGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
     OrderPo selectByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
     void confirmOrder(@Param("uuid") String uuid, @Param("groupId") String groupId);
 }

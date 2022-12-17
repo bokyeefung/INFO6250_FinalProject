@@ -60,4 +60,13 @@ public class RelationDao extends AbstractDao<RelationPo> {
             throw new ServiceException(e);
         }
     }
+
+    public RelationPo selectByUuidAndHostGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            return getMapper(RelationMapper.class).selectByUuidAndHostGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Select relation by uuid failed, uuid is: {}", uuid);
+            throw new ServiceException("selectByUuidAndHostGroupId", e);
+        }
+    }
 }

@@ -23,13 +23,8 @@
         where UUID = #{uuid,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo">
-        <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into tbl_order (RELATION_ID, `NUMBER`, IS_CONFIRMED
-        )
-        values (#{relationId,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{isConfirmed,jdbcType=INTEGER}
-        )
+        insert into tbl_order (UUID, RELATION_ID, `NUMBER`, IS_CONFIRMED)
+        values (#{uuid,jdbcType=VARCHAR}, #{relationId,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{isConfirmed,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.OrderPo">
         <selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.String">
@@ -114,6 +109,16 @@
         AD.TIME_COST AS DST_TIME_COST, AD.`NUMBER` AS DST_NUMBER
     </sql>
 
+    <select id="selectByHostGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_RELATION R ON R.UUID = O.RELATION_ID
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
+        LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+        WHERE AD.GROUP_ID = #{groupId,jdbcType=VARCHAR}
+        ORDER BY O.IS_CONFIRMED ASC
+    </select>
+
     <select id="selectByGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
         SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
         O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
@@ -122,6 +127,15 @@
         LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
         WHERE A.GROUP_ID = #{groupId,jdbcType=VARCHAR}
         ORDER BY O.IS_CONFIRMED ASC
+    </select>
+
+    <select id="selectByUuidAndHostGroupId" parameterType="java.lang.String" resultMap="RichResultMap">
+        SELECT O.UUID, O.RELATION_ID, <include refid="Src_Article_Column_List"/>, <include refid="Dst_Article_Column_List"/>,
+        O.IS_CONFIRMED, O.`NUMBER` FROM TBL_ORDER O
+        LEFT JOIN TBL_RELATION R ON R.UUID = O.RELATION_ID
+        LEFT JOIN TBL_ARTICLE A ON A.UUID = R.SOURCE_ID
+        LEFT JOIN TBL_ARTICLE AD ON AD.UUID = R.DESTINATION_ID
+        WHERE O.UUID = #{uuid,jdbcType=VARCHAR} AND AD.GROUP_ID = #{groupId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectByUuidAndGroupId" parameterType="java.lang.String" resultMap="RichResultMap">

@@ -63,11 +63,29 @@ public class OrderDao extends AbstractDao<OrderPo> {
         }
     }
 
+    public List<OrderPo> selectByHostGroupId(String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByHostGroupId(groupId);
+        } catch (Exception e) {
+            log.error("Select order by host groupId failed, uuid is: {}", groupId);
+            throw new ServiceException("Select order by host groupId failed", e);
+        }
+    }
+
     public List<OrderPo> selectByGroupId(String groupId) throws ServiceException {
         try {
             return getMapper(OrderMapper.class).selectByGroupId(groupId);
         } catch (Exception e) {
             log.error("Select order by groupId failed, uuid is: {}", groupId);
+            throw new ServiceException("Select order by groupId failed", e);
+        }
+    }
+
+    public OrderPo selectByUuidAndHostGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            return getMapper(OrderMapper.class).selectByUuidAndHostGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Select order by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
             throw new ServiceException("Select order by groupId failed", e);
         }
     }
