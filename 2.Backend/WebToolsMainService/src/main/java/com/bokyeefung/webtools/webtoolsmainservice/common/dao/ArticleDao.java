@@ -69,6 +69,15 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
         }
     }
 
+    public ArticlePo selectByUuidAndGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            return getMapper(ArticleMapper.class).selectByUuidAndGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Select article by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
+            throw new ServiceException("Select article by uuid and groupId failed", e);
+        }
+    }
+
     public int updateByPrimaryKeySelective(ArticlePo record) throws ServiceException {
         if (record == null) {
             return 0;

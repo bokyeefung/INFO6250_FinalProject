@@ -43,8 +43,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ArticlePo selectArticleByUuid() throws ServiceException {
-        return null;
+    public ArticlePo selectArticleByUuid(String uuid, String groupId) throws ServiceException {
+        return articleDao.selectByUuidAndGroupId(uuid, groupId);
     }
 
     @Override

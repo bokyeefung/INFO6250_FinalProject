@@ -59,7 +59,6 @@ public class ManagerController {
     }
 
     @DeleteMapping("/article/{uuid}")
-    @ResponseBody
     public void deleteArticle(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
         ParamCheckUtil.checkParam(uuid, "uuid", StringUtils::isNotEmpty);
         UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
@@ -79,8 +78,15 @@ public class ManagerController {
         return managerService.selectAllArticle(userPo.getGroupId());
     }
 
-    public ArticlePo selectArticleByUuid() throws ServiceException {
-        return null;
+    @GetMapping("/article/{uuid}")
+    @ResponseBody
+    public ArticlePo selectArticleByUuid(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
+        ParamCheckUtil.checkParam(uuid, "uuid", StringUtils::isNotEmpty);
+        UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        return managerService.selectArticleByUuid(uuid, userPo.getGroupId());
     }
 
     public ArticlePo updateArticleCost() throws ServiceException {

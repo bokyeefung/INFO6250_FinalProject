@@ -14,7 +14,7 @@ public interface ManagerService {
     ArticlePo createArticle(ArticlePo articlePo) throws ServiceException;
     void deleteArticle(String uuid, String groupId) throws ServiceException;
     List<ArticlePo> selectAllArticle(String groupId) throws ServiceException;
-    ArticlePo selectArticleByUuid() throws ServiceException;
+    ArticlePo selectArticleByUuid(String uuid, String groupId) throws ServiceException;
     ArticlePo updateArticleCost() throws ServiceException;
 
     List<OrderPo> queryOrderList(String groupId) throws ServiceException;

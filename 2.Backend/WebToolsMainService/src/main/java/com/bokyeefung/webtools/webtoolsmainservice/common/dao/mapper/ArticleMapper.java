@@ -13,5 +13,7 @@ import java.util.List;
 public interface ArticleMapper extends AbstractMapper<ArticlePo> {
     List<ArticlePo> selectByGroupId(@Param("groupId") String groupId);
 
+    ArticlePo selectByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
+
     void deleteByUuidAndGroupId(@Param("uuid") String uuid, @Param("groupId") String groupId);
 }
