@@ -1,7 +1,7 @@
 import message from "../../common/message";
 
 export default {
-    name: 'userManagement',
+    name: 'orderManagement',
     mixins: [message],
     data() {
         return {}
@@ -9,7 +9,7 @@ export default {
     methods: {
         getAllList(data, successFunc, failedFunc) {
             let that = this;
-            this.$axios.get('/api/supplier/admin/user').then(result => {
+            this.$axios.get('/api/supplier/manager/orders').then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
@@ -18,20 +18,9 @@ export default {
                 that.errorMessage(err.response.data.message);
             });
         },
-        addUser(data, successFunc, failedFunc) {
+        confirmOrder(uuid, successFunc, failedFunc) {
             let that = this;
-            this.$axios.post('/api/supplier/admin/user', data).then(result => {
-                successFunc(result.data);
-            }).catch(err => {
-                if ('function' === typeof failedFunc) {
-                    failedFunc(err.response.data.message);
-                }
-                that.errorMessage(err.response.data.message);
-            });
-        },
-        deleteUser(uuid, successFunc, failedFunc) {
-            let that = this;
-            this.$axios.delete('/api/supplier/admin/user/' + uuid).then(result => {
+            this.$axios.put('/api/supplier/manager/order/confirm/' + uuid).then(result => {
                 successFunc(result.data);
             }).catch(err => {
                 if ('function' === typeof failedFunc) {
