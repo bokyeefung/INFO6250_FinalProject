@@ -16,16 +16,16 @@ export default new Router({
           component: () => import('@/pages/common/home')
         },
         {
-          path: '/source',
-          component: () => import('@/pages/sourceManage/sourceHome')
+          path: '/order/product',
+          component: () => import('@/pages/orderManage/productHome')
         },
         {
-          path: '/source/add',
-          component: () => import('@/pages/sourceManage/sourceAdd')
+          path: '/order/product/add',
+          component: () => import('@/pages/orderManage/productAdd')
         },
         {
-          path: '/source/change/:id',
-          component: () => import('@/pages/sourceManage/sourceChange')
+          path: '/order/product/change/:uuid',
+          component: () => import('@/pages/orderManage/productChange')
         },
         {
           path: '/user',
