@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,8 +58,15 @@ public class ManagerController {
         return managerService.createArticle(articlePo);
     }
 
-    public void deleteArticle(String uuid) throws ServiceException {
-
+    @DeleteMapping("/article/{uuid}")
+    @ResponseBody
+    public void deleteArticle(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
+        ParamCheckUtil.checkParam(uuid, "uuid", StringUtils::isNotEmpty);
+        UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
+        if (userPo == null) {
+            throw new UserNotLoginException();
+        }
+        managerService.deleteArticle(uuid, userPo.getGroupId());
     }
 
     @GetMapping("/article")
@@ -92,9 +100,7 @@ public class ManagerController {
     @PutMapping("/order/confirm/{uuid}")
     @ResponseBody
     public void confirmOrder(@NonNull @PathVariable("uuid") String uuid) throws ServiceException {
-        if (StringUtils.isEmpty(uuid)) {
-            throw new ServiceException("Uuid illegal");
-        }
+        ParamCheckUtil.checkParam(uuid, "uuid", StringUtils::isNotEmpty);
         UserPo userPo = userSecurityCache.getUser(UserEntity.SUPPLIER); // 获取当前登录用户信息
         if (userPo == null) {
             throw new UserNotLoginException();

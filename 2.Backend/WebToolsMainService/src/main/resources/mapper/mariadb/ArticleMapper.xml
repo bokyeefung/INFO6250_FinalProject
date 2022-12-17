@@ -29,6 +29,11 @@
         from tbl_article
         where UUID = #{uuid,jdbcType=VARCHAR}
     </delete>
+
+    <delete id="deleteByUuidAndGroupId" parameterType="java.lang.String">
+        DELETE FROM TBL_ARTICLE WHERE UUID = #{uuid,jdbcType=VARCHAR} AND GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    </delete>
+
     <insert id="insert" parameterType="com.bokyeefung.webtools.cbb.model.dao.entity.ArticlePo">
         insert into tbl_article (UUID, GROUP_ID, `NAME`,
                                  MONEY_COST, TIME_COST, `NUMBER`)

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ManagerService {
     ArticlePo createArticle(ArticlePo articlePo) throws ServiceException;
-    void deleteArticle(String uuid) throws ServiceException;
+    void deleteArticle(String uuid, String groupId) throws ServiceException;
     List<ArticlePo> selectAllArticle(String groupId) throws ServiceException;
     ArticlePo selectArticleByUuid() throws ServiceException;
     ArticlePo updateArticleCost() throws ServiceException;

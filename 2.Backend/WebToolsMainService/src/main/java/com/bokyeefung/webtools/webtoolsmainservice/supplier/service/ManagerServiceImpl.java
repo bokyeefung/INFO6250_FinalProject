@@ -33,8 +33,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public void deleteArticle(String uuid) throws ServiceException {
-
+    public void deleteArticle(String uuid, String groupId) throws ServiceException {
+        articleDao.deleteByUuidAndGroupId(uuid, groupId);
     }
 
     @Override

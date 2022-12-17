@@ -24,6 +24,15 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
         }
     }
 
+    public void deleteByUuidAndGroupId(String uuid, String groupId) throws ServiceException {
+        try {
+            getMapper(ArticleMapper.class).deleteByUuidAndGroupId(uuid, groupId);
+        } catch (Exception e) {
+            log.error("Delete article by uuid and groupId failed, uuid is: {}, groupId is: {}", uuid, groupId);
+            throw new ServiceException("Delete article by uuid and groupId failed", e);
+        }
+    }
+
     public int insert(ArticlePo record) throws ServiceException {
         try {
             return getMapper(ArticleMapper.class).insert(record);
@@ -56,7 +65,7 @@ public class ArticleDao extends AbstractDao<ArticlePo> {
             return getMapper(ArticleMapper.class).selectByGroupId(groupId);
         } catch (Exception e) {
             log.error("Select article by groupId failed, groupId is: {}", groupId);
-            throw new ServiceException(e);
+            throw new ServiceException("Select article by groupId failed", e);
         }
     }
 
