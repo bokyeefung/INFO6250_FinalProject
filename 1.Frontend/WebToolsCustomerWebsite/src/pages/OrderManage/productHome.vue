@@ -3,7 +3,7 @@
         <el-card style="margin-top: 20px;" v-loading="loading">
             <div slot="header">
                 <span>Overview</span>
-                <el-button style="float: right;" size="small" type="primary" @click="toOrderAdd">Order Product</el-button>
+                <el-button style="float: right;" size="small" type="primary" @click="toOrderAdd">Order Commodity</el-button>
             </div>
             <div class="content-list-function">
                 <el-button type="text" size="mini" :underline="false" @click="getAllListImpl"
@@ -17,7 +17,7 @@
             <el-table :data="tableData" :resizable="false" ref="multipleTable" @selection-change="handleSelectionChange"
                       border highlight-current-row class="content-list-table">
                 <el-table-column type="selection" width="36"></el-table-column>
-                <el-table-column label="Product Name" min-width="180" fixed sortable>
+                <el-table-column label="Commodity Name" min-width="180" fixed sortable>
                     <template slot-scope="scope">
                         {{scope.row.srcArticle.name}}
                     </template>

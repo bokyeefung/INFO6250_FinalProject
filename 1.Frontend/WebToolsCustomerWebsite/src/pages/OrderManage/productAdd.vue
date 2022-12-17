@@ -3,13 +3,13 @@
 
         <div style="background-color: white; border-bottom: 1px solid #eee;">
             <el-page-header style="padding: 24px; margin: 0 auto;"
-                            @back="goBack" content="Order Product"></el-page-header>
+                            @back="goBack" content="Order Commodity"></el-page-header>
         </div>
 
 
         <el-card style="margin: 20px;">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px">
-                <el-form-item label="Product Name" prop="relationId">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px">
+                <el-form-item label="Commodity Name" prop="relationId">
                     <div style="display: flex; flex-direction: row;">
                         <el-input v-model="ruleForm.productName" placeholder="Click the query button on the right to select product" disabled></el-input>
                         <el-button type="primary" style="margin-left: 10px;" @click="selectRelationImpl">···</el-button>
@@ -27,14 +27,14 @@
             </el-form>
         </el-card>
 
-        <el-dialog title="Product" :visible.sync="dialog.dialogTableVisible" width="70%">
+        <el-dialog title="Commodity" :visible.sync="dialog.dialogTableVisible" width="70%">
             <el-table :data="dialog.gridData"max-height="400">
-                <el-table-column label="Product Name" min-width="180" fixed sortable>
+                <el-table-column label="Commodity Name" min-width="180" fixed sortable>
                     <template slot-scope="scope">
                         {{scope.row.srcArticle.name}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="number" label="Raw Material Stock" min-width="180" sortable>
+                <el-table-column prop="number" label="Commodity Stock" min-width="180" sortable>
                     <template slot-scope="scope">
                         {{scope.row.srcArticle.number}}
                     </template>
