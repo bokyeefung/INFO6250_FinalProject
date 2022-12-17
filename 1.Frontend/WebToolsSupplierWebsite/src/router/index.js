@@ -24,7 +24,7 @@ export default new Router({
           component: () => import('@/pages/sourceManage/sourceAdd')
         },
         {
-          path: '/source/change/:id',
+          path: '/source/change/:uuid',
           component: () => import('@/pages/sourceManage/sourceChange')
         },
         {

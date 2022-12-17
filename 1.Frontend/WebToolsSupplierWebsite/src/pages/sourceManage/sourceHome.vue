@@ -88,7 +88,7 @@
                 this.$router.push('/source/add');
             },
             updateSourceImpl(scopeRow) {
-                // TODO: 添加并跳转到详情展示页面
+                this.$router.push(`/source/change/${scopeRow.uuid}`);
             },
             deleteSourceImpl(scopeRow) {
                 let that = this;
